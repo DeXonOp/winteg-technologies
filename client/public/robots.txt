@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Crawl-delay: 10 (only supported by Bing/Yandex; Google ignores this)
+Crawl-Delay: 10
+
+# XML Sitemaps
+Sitemap: https://wintegtechnologies.com/sitemap.xml
+
+# Host directive
+Host: https://wintegtechnologies.com/

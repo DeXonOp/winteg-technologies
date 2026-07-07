@@ -1,0 +1,92 @@
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  color: var(--clr-text);
+  font-size: var(--fs-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.custom-select-trigger:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 2px var(--clr-primary-glow);
+}
+
+.custom-select-trigger.placeholder {
+  color: var(--clr-text-secondary);
+}
+
+.custom-select-trigger:hover,
+.custom-select-trigger.open {
+  border-color: var(--clr-border-light);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.custom-select-icon {
+  transition: transform var(--transition-fast);
+  color: var(--clr-text-secondary);
+}
+
+.custom-select-trigger.open .custom-select-icon {
+  transform: rotate(180deg);
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: var(--clr-surface-light);
+  border: 1px solid var(--clr-border-light);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0;
+  z-index: 100;
+  box-shadow: var(--shadow-lg);
+  max-height: 250px;
+  overflow-y: auto;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+/* Scrollbar for dropdown */
+.custom-select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-select-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--clr-border);
+  border-radius: 3px;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-select-option {
+  padding: 0.6rem 1rem;
+  color: var(--clr-text-secondary);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.custom-select-option:hover,
+.custom-select-option.selected {
+  background: var(--clr-surface-hover);
+  color: var(--clr-text);
+}

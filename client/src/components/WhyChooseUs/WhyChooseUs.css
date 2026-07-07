@@ -1,0 +1,104 @@
+.why {
+  background: var(--clr-bg);
+}
+
+.why__header {
+  text-align: center;
+  margin-bottom: var(--space-4xl);
+}
+
+.why__header .section-subtitle {
+  margin: 0 auto;
+}
+
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+}
+
+/* Card */
+.why__card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.why__card:hover {
+  border-color: rgba(108, 99, 255, 0.2);
+  background: var(--clr-surface-light);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.why__card-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(0, 217, 255, 0.1));
+  color: var(--clr-primary);
+}
+
+.why__card:hover .why__card-icon {
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.25), rgba(0, 217, 255, 0.15));
+}
+
+.why__card-content {
+  flex: 1;
+}
+
+.why__card-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+
+.why__card-desc {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
+
+.why__card-number {
+  position: absolute;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  font-family: var(--font-heading);
+  font-size: var(--fs-3xl);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.why__card:hover .why__card-number {
+  color: rgba(108, 99, 255, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .why__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .why__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .why__card {
+    padding: var(--space-lg);
+  }
+}

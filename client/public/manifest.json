@@ -1,0 +1,23 @@
+{
+  "name": "Winteg Technologies",
+  "short_name": "WintegTech",
+  "description": "Winteg Technologies — Web Development, AI Solutions & Software Engineering Company in India",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0E1A",
+  "theme_color": "#0A0E1A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "72x72 96x96 128x128 144x144 152x152 192x192 384x384 512x512 any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "technology", "software"],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
