@@ -52,7 +52,8 @@ import smtplib
 from email.message import EmailMessage
 
 def notify_admin(session_id: str):
-    link = f"http://localhost:5173/admin/chat?session={session_id}"
+    base_url = "https://wintegtechnologies.com" if settings.APP_ENV == "production" else "http://localhost:5173"
+    link = f"{base_url}/admin/chat?session={session_id}"
     body = f"A customer has requested a human handoff.\n\nSession ID: {session_id}\n\nClick here to chat: {link}"
     
     # 1. Email Notification
