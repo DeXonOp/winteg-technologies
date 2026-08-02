@@ -9,7 +9,7 @@ from app.models.contact import NewsletterRequest, NewsletterResponse
 
 router = APIRouter(prefix="/api", tags=["Newsletter"])
 
-# In-memory store (replace with database later)
+# In-memory store (replace with database in fututre)
 subscribers: list[dict] = []
 
 
