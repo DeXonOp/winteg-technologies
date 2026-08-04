@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
 import About from './components/About/About'
@@ -11,9 +11,24 @@ import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
 import Chatbot from './components/Chatbot/Chatbot'
 import AdminChat from './components/AdminChat/AdminChat'
+import PrivacyPolicy from './components/Legal/PrivacyPolicy'
+import TermsOfService from './components/Legal/TermsOfService'
 import './App.css'
 
 function App() {
+  const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | null>(null);
+
+  useEffect(() => {
+    if (legalModal) {
+      // Robust scroll lock for all devices including iOS
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+  }, [legalModal]);
+
   useEffect(() => {
     // Only run observers if not on admin chat
     if (window.location.pathname.startsWith('/admin/chat')) return;
@@ -57,8 +72,10 @@ function App() {
         <TechStack />
         <Contact />
       </main>
-      <Footer />
+      <Footer onOpenLegal={setLegalModal} />
       <Chatbot />
+      {legalModal === 'privacy' && <PrivacyPolicy onClose={() => setLegalModal(null)} />}
+      {legalModal === 'terms' && <TermsOfService onClose={() => setLegalModal(null)} />}
     </div>
   )
 }

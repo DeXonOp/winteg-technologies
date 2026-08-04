@@ -15,11 +15,13 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
+  const [activeSection, setActiveSection] = useState(window.location.pathname === '/' ? 'home' : '')
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 150)
+
+      if (window.location.pathname !== '/') return;
 
       // Update active section
       const sections = navLinks.map(l => l.href.replace('#', ''))
@@ -63,6 +65,12 @@ export default function Navbar() {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false)
+
+    if (window.location.pathname !== '/') {
+      window.location.href = `/${href}`
+      return
+    }
+
     const id = href.replace('#', '')
     const el = document.getElementById(id)
     if (el) {

@@ -13,7 +13,7 @@
   z-index: 0;
 }
 
-.app > :not(nav, .chatbot__container) {
+.app > :not(nav, .chatbot__container, .legal-modal-overlay) {
   position: relative;
   z-index: 1;
 }

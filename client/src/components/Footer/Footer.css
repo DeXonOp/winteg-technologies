@@ -174,8 +174,8 @@
 /* WhatsApp Floating */
 .footer__whatsapp-float {
   position: fixed;
-  bottom: 2rem;
-  right: calc(2rem + 48px + 1rem);
+  bottom: calc(2rem + 48px + 1rem); /* Placed directly above the chatbot button */
+  right: 2rem;
   width: 48px;
   height: 48px;
   display: flex;
@@ -211,6 +211,24 @@
     grid-template-columns: 1fr;
     gap: var(--space-xl);
     padding: var(--space-2xl) 0;
+    text-align: center;
+  }
+
+  .footer__logo,
+  .footer__socials {
+    justify-content: center;
+  }
+
+  .footer__links {
+    align-items: center;
+  }
+
+  .footer__newsletter {
+    flex-direction: column;
+  }
+
+  .footer__newsletter .btn {
+    width: 100%;
   }
 
   .footer__bottom {
@@ -219,10 +237,15 @@
     text-align: center;
   }
 
+  .footer__bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm) var(--space-md);
+  }
 
   .footer__whatsapp-float {
-    bottom: 1rem;
-    right: calc(1rem + 42px + 10px);
+    bottom: calc(1rem + 42px + 1rem); /* Placed directly above the chatbot button on mobile */
+    right: 1rem;
     width: 42px;
     height: 42px;
   }

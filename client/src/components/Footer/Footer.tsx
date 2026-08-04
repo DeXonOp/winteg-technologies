@@ -18,7 +18,11 @@ const serviceLinks = [
   'Social Media by Winteg',
 ]
 
-export default function Footer() {
+interface FooterProps {
+  onOpenLegal?: (type: 'privacy' | 'terms') => void;
+}
+
+export default function Footer({ onOpenLegal }: FooterProps) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
@@ -180,8 +184,8 @@ export default function Footer() {
           </p>
           <div className="footer__bottom-links">
             <a href="https://wintegtechnologies.com/">Winteg Technologies</a>
-            <a href="#privacy">Privacy Policy</a>
-            <a href="#terms">Terms of Service</a>
+            <a href="#privacy" onClick={(e) => { e.preventDefault(); if (onOpenLegal) onOpenLegal('privacy'); }}>Privacy Policy</a>
+            <a href="#terms" onClick={(e) => { e.preventDefault(); if (onOpenLegal) onOpenLegal('terms'); }}>Terms of Service</a>
           </div>
         </div>
       </div>
