@@ -37,7 +37,7 @@ def send_contact_email(data) -> bool:
 
             # 1. Notification to you (with all form details)
             notify = MIMEMultipart()
-            notify["From"] = "Winteg Technologies <contact@wintegtechnologies.com>"
+            notify["From"] = "Winteg Technologies <wintegtechnologies@gmail.com>"
             notify["To"] = "wintegtechnologies@gmail.com"
             notify["Reply-To"] = data.email
             notify["Subject"] = f"New Contact: {data.name} ({data.email}) — {data.service}"
@@ -58,7 +58,7 @@ Message:
 
             # 2. Clean auto-reply to customer (no quoted submission details)
             reply = MIMEMultipart()
-            reply["From"] = "Winteg Technologies <contact@wintegtechnologies.com>"
+            reply["From"] = "Winteg Technologies <wintegtechnologies@gmail.com>"
             reply["To"] = data.email
             reply["Subject"] = f"Thank you for contacting Winteg Technologies, {data.name}!"
             reply.attach(MIMEText(f"""

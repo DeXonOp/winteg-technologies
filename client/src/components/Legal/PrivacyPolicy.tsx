@@ -93,7 +93,7 @@ export default function PrivacyPolicy({ onClose }: Props) {
           <h2>10. Contact Us</h2>
           <p>If you have any questions about this Privacy Policy, please contact us:</p>
           <ul>
-            <li><strong>By email:</strong> contact@wintegtechnologies.com</li>
+            <li><strong>By email:</strong> wintegtechnologies@gmail.com</li>
             <li><strong>By phone:</strong> +91-8100474669 / +91-8420573673</li>
             <li><strong>By visiting this page on our website:</strong> <a href="https://wintegtechnologies.com/#contact" onClick={(e) => { e.preventDefault(); onClose(); const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>wintegtechnologies.com/contact</a></li>
           </ul>

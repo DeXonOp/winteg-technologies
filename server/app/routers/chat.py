@@ -62,7 +62,7 @@ def notify_admin(session_id: str):
             msg = EmailMessage()
             msg.set_content(body)
             msg['Subject'] = 'Winteg Support: Human Handoff Requested'
-            msg['From'] = "Winteg Technologies <contact@wintegtechnologies.com>"
+            msg['From'] = "Winteg Technologies <wintegtechnologies@gmail.com>"
             msg['To'] = "wintegtechnologies@gmail.com"
             with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
                 server.starttls()

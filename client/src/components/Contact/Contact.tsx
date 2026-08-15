@@ -91,7 +91,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <span className="contact__detail-label">Email</span>
-                  <a href="mailto:contact@wintegtechnologies.com" className="contact__detail-value">contact@wintegtechnologies.com</a>
+                  <a href="mailto:wintegtechnologies@gmail.com" className="contact__detail-value">wintegtechnologies@gmail.com</a>
                 </div>
               </div>
 
