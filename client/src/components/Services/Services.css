@@ -69,7 +69,6 @@
 /* The Service Card (Server Blade) */
 .services__card {
   position: relative;
-  overflow: hidden;
   cursor: default;
   display: flex;
   flex-direction: column; /* Changed from row to column for top panel */
@@ -78,6 +77,19 @@
   border-radius: 6px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   will-change: transform, opacity;
+  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Dim other cards when one is active */
+.services__bento:has(.is-active) .services__card:not(.is-active) {
+  opacity: 0.3;
+  filter: grayscale(80%) blur(3px);
+  transform: scale(0.98);
+}
+
+.services__card.is-active {
+  z-index: 50;
+  filter: drop-shadow(0 0 40px rgba(6, 182, 212, 0.4));
 }
 
 .services__card--large {
@@ -250,12 +262,13 @@
 .data-stream {
   position: absolute;
   top: -100%;
-  width: 1px;
+  width: 2px;
   height: 100%;
-  background: linear-gradient(to bottom, transparent, var(--clr-primary), transparent);
-  opacity: 0.15;
+  background: linear-gradient(to bottom, transparent, var(--clr-primary) 80%, #fff 100%);
+  opacity: 0.4;
   z-index: -1;
   animation: streamDown 4s linear infinite;
+  box-shadow: 0 0 10px var(--clr-primary);
 }
 
 .data-stream-1 {
@@ -278,19 +291,19 @@
 }
 
 .services__card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  margin-bottom: var(--space-lg);
   flex-shrink: 0;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .services__card-title {
+  color: #f8fafc;
   font-size: var(--fs-lg);
   font-weight: 700;
   margin-bottom: var(--space-xs);
@@ -390,42 +403,50 @@
 
 /* The sliding 3D chassis */
 .drawer-chassis {
-  position: absolute;
-  inset: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   transform-style: preserve-3d;
   z-index: 1;
 }
 
 /* FRONT FACE (Normal Card contents) */
 .drawer-faceplate {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  width: 100%;
+  flex-grow: 1;
   background: rgba(10, 10, 16, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 6px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   overflow: hidden;
   transform: translateZ(1px); 
   backface-visibility: hidden;
 }
 
-/* MOTHERBOARD (The inside floor of the drawer) */
+/* MOTHERBOARD (The top face of the drawer) */
 .drawer-motherboard {
   position: absolute;
-  bottom: 0;
+  bottom: 100%; /* Attach to the top edge of the front face */
   left: 0;
   width: 100%;
-  height: 350px; /* How deep the drawer goes back into the rack */
-  background: linear-gradient(to top, #09090c, #13131a);
-  border: 1px solid #222;
-  border-top: none;
-  transform-origin: bottom;
-  transform: rotateX(-90deg); /* Folds exactly 90 degrees backwards into the slot */
+  height: 400px; /* Reverted to base depth */
+  background: 
+    radial-gradient(circle at center, color-mix(in srgb, var(--theme-color) 15%, transparent) 0%, #050508 100%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+  border: 1px solid color-mix(in srgb, var(--theme-color) 30%, transparent);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  transform-origin: bottom; /* Pivot at the top edge of front face */
+  transform: rotateX(90deg); /* Folds exactly 90 degrees backwards to form the top face */
   display: flex;
   flex-direction: column;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9), 0 -5px 20px color-mix(in srgb, var(--theme-color) 20%, transparent);
   overflow: hidden;
 }
 
@@ -436,6 +457,8 @@
   gap: 20px;
   position: relative;
   z-index: 2;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .motherboard-traces {
@@ -446,33 +469,78 @@
   z-index: 1;
 }
 
-.drawer-details h4 {
-  font-size: 0.9rem;
-  color: white;
-  margin-bottom: 12px;
-  text-transform: uppercase;
+.motherboard-traces path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: traceDraw 3s infinite linear;
+  stroke: var(--theme-color);
+  filter: drop-shadow(0 0 6px var(--theme-color));
+  opacity: 0.8;
+}
+
+@keyframes traceDraw {
+  0% { stroke-dashoffset: 1000; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -1000; }
+}
+
+.drawer-header-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.drawer-header-action h4 {
+  font-size: 1rem;
+  color: var(--theme-color);
   letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--theme-color) 40%, transparent);
+}
+
+.drawer-close-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drawer-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
 }
 
 .drawer-details .detailed-info {
   font-family: monospace;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
   padding: 16px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.05);
-  color: #06B6D4;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--theme-color) 30%, transparent);
+  color: #fff;
+  font-size: 0.95rem;
   line-height: 1.6;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 4px 15px rgba(0,0,0,0.5);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--theme-color) 50%, transparent);
 }
 
 .drawer-sidebar .hardware-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  background: rgba(255,255,255,0.02);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
 .drawer-sidebar .stat {
@@ -480,13 +548,48 @@
   align-items: center;
   gap: 8px;
   font-family: monospace;
-  font-size: 0.85rem;
-  color: var(--clr-text-secondary);
+  font-size: 0.9rem;
+  color: #94a3b8;
 }
 
 .drawer-sidebar .stat span {
-  color: white;
+  color: var(--theme-color);
   font-weight: bold;
+}
+
+.tech-stack-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0,0,0,0.4);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.stack-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #64748b;
+  letter-spacing: 1px;
+}
+
+.stack-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-badge {
+  background: color-mix(in srgb, var(--theme-color) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-color) 40%, transparent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  text-shadow: 0 0 5px color-mix(in srgb, var(--theme-color) 60%, transparent);
+  white-space: nowrap;
 }
 
 /* Handle trigger styles */
