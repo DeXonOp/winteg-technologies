@@ -1,5 +1,10 @@
+/* =========================================================================
+   3D NOTEBOOK PORTFOLIO
+   ========================================================================= */
+
 .portfolio {
-  background: var(--clr-bg-alt);
+  position: relative;
+  z-index: 1;
 }
 
 .portfolio__header {
@@ -11,169 +16,375 @@
   margin: 0 auto;
 }
 
-/* Filters */
-.portfolio__filters {
+/* Notebook Container & Perspective */
+.notebook-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--space-3xl);
+  position: relative;
+  width: 100%;
+}
+
+.notebook-wrapper {
+  width: 800px;
+  height: 520px;
+  display: flex;
+  justify-content: center;
+  perspective: 2500px; /* Strong 3D perspective */
+  margin-bottom: var(--space-2xl);
+}
+
+.notebook {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* Slight resting tilt */
+  transform: rotateX(8deg) rotateY(0deg);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.notebook:hover {
+  transform: rotateX(12deg) rotateY(-3deg);
+}
+
+/* Notebook Pages */
+.notebook-page {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  /* Hardware acceleration */
+  will-change: transform;
+}
+
+.page-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--clr-surface-light);
+  border: 1px solid var(--clr-border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Front face of a right-hand page */
+.page-front {
+  transform: rotateY(0deg);
+  border-radius: 4px 16px 16px 4px;
+  transform-origin: left center;
+  border-left: 1px solid rgba(0, 0, 0, 0.8); /* Spine shadow */
+  box-shadow: inset 20px 0 50px -20px rgba(0, 0, 0, 0.4);
+}
+
+/* Back face (becomes a left-hand page when flipped) */
+.page-back {
+  transform: rotateY(180deg);
+  border-radius: 16px 4px 4px 16px;
+  transform-origin: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.8); /* Spine shadow */
+  box-shadow: inset -20px 0 50px -20px rgba(0, 0, 0, 0.4);
+}
+
+/* Book Edge Shadows based on state */
+.notebook-page.flipped .page-back {
+  box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.5), inset -20px 0 50px -20px rgba(0, 0, 0, 0.4);
+}
+
+.notebook-page:not(.flipped) .page-front {
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), inset 20px 0 50px -20px rgba(0, 0, 0, 0.4);
+}
+
+/* Dynamic Lighting Overlay */
+.page-lighting {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+.lighting-front {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 0%, transparent 15%, transparent 85%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+.lighting-back {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.3) 0%, transparent 15%, transparent 85%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+/* Notebook Cover Styles */
+.notebook-cover {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a1a, #111129);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-3xl);
+  position: relative;
+  border: 1px solid rgba(168, 85, 247, 0.2);
 }
 
-.portfolio__filter-btn {
-  padding: 0.5rem 1.25rem;
-  font-size: var(--fs-sm);
-  font-weight: 500;
+.front-cover {
+  border-left: 14px solid #04040a; /* Binder spine */
+}
+
+.back-cover {
+  border-right: 14px solid #04040a; /* Binder spine */
+}
+
+.cover-design {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 8px;
+  background: rgba(168, 85, 247, 0.02);
+  width: 80%;
+  box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.05);
+}
+
+.cover-design h2 {
   color: var(--clr-text-secondary);
-  background: transparent;
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
+  font-size: var(--fs-xs);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
 }
 
-.portfolio__filter-btn:hover {
-  color: var(--clr-text);
-  border-color: var(--clr-border-light);
-  background: rgba(255, 255, 255, 0.03);
+.cover-design h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--space-lg);
+  line-height: 1.1;
 }
 
-.portfolio__filter-btn--active {
-  color: white;
-  background: linear-gradient(135deg, var(--clr-primary), #8B7FFF);
-  border-color: transparent;
-  box-shadow: 0 4px 15px var(--clr-primary-glow);
+.cover-line {
+  height: 2px;
+  width: 40px;
+  background: var(--clr-primary);
+  margin: 0 auto var(--space-lg);
+  border-radius: 2px;
 }
 
-/* Grid */
-.portfolio__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xl);
+.cover-design p {
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
 }
 
-/* Card */
-.portfolio__card {
+.brand-mark {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(168, 85, 247, 0.1);
+  margin-bottom: var(--space-md);
+}
+
+/* Notebook Blank Page */
+.notebook-blank {
+  width: 100%;
+  height: 100%;
+  background: var(--clr-surface-light);
+}
+
+/* Projects inside Pages */
+.page-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.notebook-project {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-xl);
+  /* Subtle grid pattern for notebook paper feel */
+  background-image: 
+    linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.project-visual {
+  flex-shrink: 0;
+  height: 170px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
+  margin-bottom: var(--space-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.portfolio__card:hover {
-  transform: translateY(-6px);
-}
-
-.portfolio__card-visual {
-  position: relative;
-  padding: var(--space-2xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 160px;
-}
-
-.portfolio__card-icon {
-  opacity: 0.6;
-}
-
-.portfolio__card-category {
+.project-number {
   position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
-  padding: 0.2rem 0.65rem;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  border: 1px solid;
-  border-radius: var(--radius-full);
+  top: -15px;
+  right: 5px;
+  font-family: var(--font-heading);
+  font-size: 6rem;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
 }
 
-.portfolio__card-body {
-  padding: var(--space-lg) var(--space-xl) var(--space-xl);
+.project-icon {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 15px currentColor);
 }
 
-.portfolio__card-title {
+.project-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-body h3 {
   font-size: var(--fs-lg);
-  font-weight: 700;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.01em;
 }
 
-.portfolio__card-desc {
-  font-size: var(--fs-sm);
+.project-body p {
+  font-size: 0.85rem;
+  color: var(--clr-text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-md);
 }
 
-.portfolio__card-tags {
+.project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
+  gap: 6px;
+  margin-bottom: var(--space-lg);
 }
 
-.portfolio__tag {
-  padding: 0.2rem 0.5rem;
-  font-size: 0.7rem;
+.project-tags span {
+  font-size: 0.65rem;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: var(--radius-full);
   font-weight: 500;
-  color: var(--clr-text-muted);
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.2);
 }
 
-/* Hover Overlay */
-.portfolio__card-overlay {
-  position: absolute;
-  inset: 0;
+.project-link {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: white !important;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s var(--ease-out);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.project-link:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Notebook Nav Controls */
+.notebook-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  background: rgba(10, 14, 26, 0.85);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  transition: opacity var(--transition-base);
+  gap: var(--space-xl);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.portfolio__card:hover .portfolio__card-overlay {
-  opacity: 1;
+.nav-btn {
+  background: transparent;
+  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  transition: color 0.2s;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .portfolio__grid {
-    grid-template-columns: repeat(2, 1fr);
+.nav-btn:not(:disabled):hover {
+  color: var(--clr-primary);
+}
+
+.nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-secondary);
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+/* =========================================================================
+   RESPONSIVE SCALING
+   Using transform scale to keep the 2-page spread intact on smaller screens
+   ========================================================================= */
+
+@media (max-width: 900px) {
+  .notebook-wrapper {
+    width: 700px;
+    height: 450px;
   }
 }
 
-@media (max-width: 640px) {
-  .portfolio__grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: var(--space-md);
-    padding-bottom: var(--space-sm);
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+@media (max-width: 768px) {
+  /* On standard mobile, the notebook is ~800px scaled down to 45% (360px) */
+  .notebook-wrapper {
+    width: 800px;
+    height: 520px;
+    transform: scale(0.45);
+    transform-origin: top center;
+    margin-bottom: -280px; /* Offset the empty space left by scaling */
   }
   
-  .portfolio__grid::-webkit-scrollbar {
-    display: none;
+  .notebook {
+    /* Disable the hover tilt on mobile to prevent touch issues */
+    transform: rotateX(0deg) rotateY(0deg) !important;
   }
-
-  .portfolio__card {
-    flex: 0 0 85%;
-    scroll-snap-align: start;
+  
+  .notebook:hover {
+    transform: rotateX(0deg) rotateY(0deg) !important;
   }
+}
 
-  .portfolio__filters {
-    gap: 6px;
+@media (max-width: 480px) {
+  /* For very small phones */
+  .notebook-wrapper {
+    transform: scale(0.40);
+    margin-bottom: -310px;
   }
+}
 
-  .portfolio__filter-btn {
-    padding: 0.4rem 0.9rem;
-    font-size: var(--fs-xs);
-  }
-
-  .portfolio__card-visual {
-    min-height: 120px;
-    padding: var(--space-xl);
+@media (max-width: 380px) {
+  .notebook-wrapper {
+    transform: scale(0.36);
+    margin-bottom: -330px;
   }
 }

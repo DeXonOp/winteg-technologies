@@ -1,3 +1,4 @@
+import { motion, type Variants } from 'framer-motion'
 import './WhyChooseUs.css'
 
 const features = [
@@ -9,6 +10,7 @@ const features = [
     ),
     title: 'End-to-End Development',
     description: 'From ideation to deployment, we handle every stage of the development lifecycle.',
+    gradient: 'linear-gradient(135deg, #A855F7, #C084FC)',
   },
   {
     icon: (
@@ -18,6 +20,7 @@ const features = [
     ),
     title: 'Affordable Pricing',
     description: 'Premium-quality solutions at competitive prices that fit your budget.',
+    gradient: 'linear-gradient(135deg, #10B981, #34D399)',
   },
   {
     icon: (
@@ -27,6 +30,7 @@ const features = [
     ),
     title: 'Fast Turnaround',
     description: 'We deliver results quickly without compromising on quality or attention to detail.',
+    gradient: 'linear-gradient(135deg, #F59E0B, #FBBF24)',
   },
   {
     icon: (
@@ -36,6 +40,7 @@ const features = [
     ),
     title: '24/7 Support',
     description: 'Round-the-clock support and communication throughout and after your project.',
+    gradient: 'linear-gradient(135deg, #06B6D4, #22D3EE)',
   },
   {
     icon: (
@@ -45,6 +50,7 @@ const features = [
     ),
     title: 'Modern Tech Stack',
     description: 'We use the latest frameworks and tools to build future-proof digital products.',
+    gradient: 'linear-gradient(135deg, #EC4899, #F472B6)',
   },
   {
     icon: (
@@ -54,14 +60,39 @@ const features = [
     ),
     title: 'Scalable Solutions',
     description: 'Architecture designed to grow with your business — from startup to enterprise.',
+    gradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
   },
 ]
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
+}
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, rotateY: -15, x: -30 },
+  visible: {
+    opacity: 1,
+    rotateY: 0,
+    x: 0,
+    transition: { type: 'spring' as const, stiffness: 80, damping: 15 },
+  },
+}
 
 export default function WhyChooseUs() {
   return (
     <section className="why section" id="whychooseus">
       <div className="container">
-        <div className="why__header fade-in">
+        <motion.div
+          className="why__header"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="section-label">Why Us</span>
           <h2 className="section-title">
             Why Choose <span className="gradient-text">Winteg?</span>
@@ -69,20 +100,43 @@ export default function WhyChooseUs() {
           <p className="section-subtitle">
             We don't just build products — we build partnerships that drive long-term success.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="why__grid">
+        <motion.div
+          className="why__grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
           {features.map((feat, i) => (
-            <div className="why__card fade-in" key={i} style={{ transitionDelay: `${i * 80}ms` }}>
-              <div className="why__card-icon">{feat.icon}</div>
+            <motion.div
+              className="why__card glass-card"
+              key={i}
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.03,
+                rotateY: 5,
+                transition: { duration: 0.3 },
+              }}
+              style={{ perspective: 1000 }}
+            >
+              {/* Big background number */}
+              <span className="why__card-bg-number">{String(i + 1).padStart(2, '0')}</span>
+
+              <div className="why__card-icon" style={{ background: feat.gradient }}>
+                {feat.icon}
+              </div>
               <div className="why__card-content">
                 <h3 className="why__card-title">{feat.title}</h3>
                 <p className="why__card-desc">{feat.description}</p>
               </div>
-              <div className="why__card-number">{String(i + 1).padStart(2, '0')}</div>
-            </div>
+
+              {/* Connecting line decoration */}
+              <div className="why__card-line" style={{ background: feat.gradient }}></div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

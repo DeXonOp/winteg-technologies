@@ -13,8 +13,18 @@ Your job is to greet visitors, quickly understand what service they are interest
 CRITICAL: Keep your answers very short, conversational, and directly to the point. Do not write long paragraphs, descriptions, or sound like an encyclopedia. Ask clarifying questions if needed, just like a real receptionist. Avoid markdown unless absolutely necessary.
 IMPORTANT: If the user asks something you cannot answer, or if they explicitly ask to speak to a human or connect to a person, you MUST reply with exactly this exact phrase and nothing else: [HANDOFF_REQUESTED]`
 
-export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false)
+interface ChatbotProps {
+  isOpen?: boolean
+  onToggle?: (open: boolean) => void
+}
+
+export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+  const isOpen = externalOpen !== undefined ? externalOpen : internalOpen
+  const setIsOpen = (v: boolean) => {
+    if (onToggle) onToggle(v)
+    else setInternalOpen(v)
+  }
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -214,15 +224,17 @@ export default function Chatbot() {
         </form>
       </div>
 
-      {/* Floating Button */}
-      <button 
-        className={`chatbot__button ${isOpen ? 'chatbot__button--open' : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle Chat"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-        <svg className="chatbot__button--close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
+      {/* Floating Button — hidden when ActionDock controls us */}
+      {!onToggle && (
+        <button 
+          className={`chatbot__button ${isOpen ? 'chatbot__button--open' : ''}`}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle Chat"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          <svg className="chatbot__button--close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      )}
     </div>
   )
 }

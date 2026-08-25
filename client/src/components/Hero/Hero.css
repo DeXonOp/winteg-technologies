@@ -45,11 +45,11 @@
 .hero__gradient-orb--3 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, #8B7FFF, transparent);
+  background: radial-gradient(circle, var(--clr-accent-rose), transparent);
   top: 40%;
   left: 50%;
   animation-delay: -10s;
-  opacity: 0.2;
+  opacity: 0.15;
 }
 
 @keyframes orbFloat {
@@ -58,12 +58,59 @@
   66% { transform: translate(-20px, 30px) scale(0.95); }
 }
 
+/* Floating geometric shapes */
+.hero__shape {
+  position: absolute;
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  animation: shapeFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero__shape--1 {
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  right: 15%;
+  border-radius: var(--radius-lg);
+  transform: rotate(45deg);
+  animation-delay: 0s;
+  border-color: rgba(168, 85, 247, 0.2);
+}
+
+.hero__shape--2 {
+  width: 50px;
+  height: 50px;
+  bottom: 25%;
+  left: 10%;
+  border-radius: 50%;
+  animation-delay: -7s;
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+.hero__shape--3 {
+  width: 60px;
+  height: 60px;
+  top: 60%;
+  right: 30%;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation-delay: -14s;
+  border: none;
+  background: rgba(168, 85, 247, 0.05);
+}
+
+@keyframes shapeFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(90deg); }
+  50% { transform: translateY(10px) rotate(180deg); }
+  75% { transform: translateY(-15px) rotate(270deg); }
+}
+
 .hero__grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(168, 85, 247, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.02) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
@@ -121,10 +168,14 @@
   letter-spacing: -0.03em;
 }
 
+.hero__title-word {
+  display: inline-block;
+}
+
 .hero__typed-wrapper {
   display: inline-block;
   position: relative;
-  min-height: 3.5rem; /* gives a fixed minimum height to the typing area to prevent shifting */
+  min-height: 3.5rem;
 }
 
 .hero__typed {
@@ -174,7 +225,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-lg);
-  padding: var(--space-lg) var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
@@ -186,11 +237,12 @@
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  cursor: default;
 }
 
 .hero__stat-number {
   font-family: var(--font-heading);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-xl);
   font-weight: 800;
   background: linear-gradient(135deg, var(--clr-text), var(--clr-primary));
   -webkit-background-clip: text;
@@ -202,12 +254,6 @@
   font-size: var(--fs-xs);
   color: var(--clr-text-muted);
   font-weight: 500;
-}
-
-.hero__stat-divider {
-  width: 1px;
-  height: 30px;
-  background: var(--clr-border-light);
 }
 
 /* Form Styling in Hero Right Column */
@@ -295,7 +341,7 @@
   padding: 0.6rem 0.8rem;
   font-size: var(--fs-sm);
   color: var(--clr-text);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(168, 85, 247, 0.03);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
@@ -310,7 +356,7 @@
 .contact__field select:focus,
 .contact__field textarea:focus {
   border-color: var(--clr-primary);
-  background: rgba(108, 99, 255, 0.03);
+  background: rgba(168, 85, 247, 0.05);
   box-shadow: 0 0 0 3px var(--clr-primary-glow);
 }
 
@@ -402,10 +448,6 @@
     flex-wrap: wrap;
     gap: var(--space-lg);
     padding: var(--space-lg);
-  }
-
-  .hero__stat-divider {
-    display: none;
   }
 
   .hero__stat {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
-import About from './components/About/About'
 import Services from './components/Services/Services'
+import CostEstimator from './components/CostEstimator/CostEstimator'
+import About from './components/About/About'
 import Portfolio from './components/Portfolio/Portfolio'
 import WhyChooseUs from './components/WhyChooseUs/WhyChooseUs'
 import Testimonials from './components/Testimonials/Testimonials'
@@ -13,14 +14,19 @@ import Chatbot from './components/Chatbot/Chatbot'
 import AdminChat from './components/AdminChat/AdminChat'
 import PrivacyPolicy from './components/Legal/PrivacyPolicy'
 import TermsOfService from './components/Legal/TermsOfService'
+import ScrollProgress from './components/ScrollProgress/ScrollProgress'
+import ParticleBackground from './components/ParticleBackground/ParticleBackground'
+import CursorGlow from './components/CursorGlow/CursorGlow'
+import LiveVisitors from './components/LiveVisitors/LiveVisitors'
+import ActionDock from './components/ActionDock/ActionDock'
 import './App.css'
 
 function App() {
   const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | null>(null);
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     if (legalModal) {
-      // Robust scroll lock for all devices including iOS
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     } else {
@@ -30,10 +36,8 @@ function App() {
   }, [legalModal]);
 
   useEffect(() => {
-    // Only run observers if not on admin chat
     if (window.location.pathname.startsWith('/admin/chat')) return;
 
-    // Intersection Observer for scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -57,23 +61,47 @@ function App() {
 
   return (
     <div className="app">
-      {/* Skip-to-content link for accessibility — positive SEO signal */}
+      {/* Skip-to-content link for accessibility */}
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
+
+      {/* Ambient effects */}
+      <ParticleBackground />
+      <CursorGlow />
+      <ScrollProgress />
+
+      {/* Live visitor count badge */}
+      <LiveVisitors />
+
       <Navbar />
       <main id="main-content">
         <Hero />
-        <About />
+        <div className="section-divider"></div>
         <Services />
+        <div className="section-divider"></div>
+        <CostEstimator />
+        <div className="section-divider"></div>
+        <About />
+        <div className="section-divider"></div>
         <Portfolio />
+        <div className="section-divider"></div>
         <WhyChooseUs />
+        <div className="section-divider"></div>
         <Testimonials />
+        <div className="section-divider"></div>
         <TechStack />
+        <div className="section-divider"></div>
         <Contact />
       </main>
       <Footer onOpenLegal={setLegalModal} />
-      <Chatbot />
+
+      {/* AI Chatbot — controlled by ActionDock */}
+      <Chatbot isOpen={chatOpen} onToggle={setChatOpen} />
+
+      {/* macOS-style floating action dock */}
+      <ActionDock onOpenChat={() => setChatOpen(true)} />
+
       {legalModal === 'privacy' && <PrivacyPolicy onClose={() => setLegalModal(null)} />}
       {legalModal === 'terms' && <TermsOfService onClose={() => setLegalModal(null)} />}
     </div>

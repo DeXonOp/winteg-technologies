@@ -1,50 +1,49 @@
 .techstack {
-  background: var(--clr-bg);
   position: relative;
+  z-index: 1;
   overflow: hidden;
 }
 
 .techstack__header {
   text-align: center;
-  margin-bottom: var(--space-4xl);
+  margin-bottom: var(--space-3xl);
 }
 
 .techstack__header .section-subtitle {
   margin: 0 auto;
 }
 
-/* Categories */
 .techstack__categories {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-2xl);
-  position: relative;
-  z-index: 1;
+  gap: var(--space-lg);
 }
 
 .techstack__category {
   padding: var(--space-xl);
-  border-radius: var(--radius-lg);
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
 }
 
-.techstack__category:hover {
-  border-color: rgba(108, 99, 255, 0.15);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+.techstack__category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary), transparent);
+  opacity: 0.4;
 }
 
 .techstack__category-title {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
   font-weight: 700;
-  color: var(--clr-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
   margin-bottom: var(--space-lg);
+  color: var(--clr-text);
+  letter-spacing: -0.01em;
 }
 
-/* Pills */
 .techstack__pills {
   display: flex;
   flex-wrap: wrap;
@@ -54,35 +53,22 @@
 .techstack__pill {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 0.5rem 1rem;
+  gap: 8px;
+  padding: 8px 16px;
   font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--clr-text-secondary);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--clr-border);
+  background: rgba(168, 85, 247, 0.04);
+  border: 1px solid rgba(168, 85, 247, 0.08);
   border-radius: var(--radius-full);
-  transition: all var(--transition-base);
-  animation: techPillFadeIn 0.6s var(--ease-out) backwards;
+  cursor: default;
+  transition: all 0.3s var(--ease-out);
 }
 
 .techstack__pill:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--tech-color, var(--clr-primary));
   color: var(--clr-text);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 20px color-mix(in srgb, var(--tech-color, var(--clr-primary)) 15%, transparent);
-}
-
-@keyframes techPillFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  border-color: var(--tech-color, var(--clr-primary));
+  background: rgba(168, 85, 247, 0.08);
 }
 
 .techstack__pill-dot {
@@ -90,15 +76,16 @@
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 0 8px currentColor;
+  box-shadow: 0 0 6px currentColor;
 }
 
-/* Floating Particles */
+/* Floating particles */
 .techstack__particles {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  overflow: hidden;
+  z-index: -1;
 }
 
 .techstack__particle {
@@ -106,26 +93,25 @@
   border-radius: 50%;
   background: var(--clr-primary);
   opacity: 0.15;
-  animation: particleFloat linear infinite;
+  animation: techParticleFloat linear infinite;
 }
 
-@keyframes particleFloat {
-  0% {
-    transform: translateY(0) translateX(0) scale(1);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.2;
-  }
-  50% {
+@keyframes techParticleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
     opacity: 0.15;
   }
-  90% {
-    opacity: 0.05;
+  25% {
+    transform: translate(10px, -20px) scale(1.2);
+    opacity: 0.25;
   }
-  100% {
-    transform: translateY(-200px) translateX(50px) scale(0.5);
-    opacity: 0;
+  50% {
+    transform: translate(-15px, -10px) scale(0.8);
+    opacity: 0.1;
+  }
+  75% {
+    transform: translate(5px, 15px) scale(1.1);
+    opacity: 0.2;
   }
 }
 
@@ -133,15 +119,5 @@
 @media (max-width: 768px) {
   .techstack__categories {
     grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-
-  .techstack__category {
-    padding: var(--space-lg);
-  }
-
-  .techstack__pill {
-    padding: 0.4rem 0.75rem;
-    font-size: var(--fs-xs);
   }
 }

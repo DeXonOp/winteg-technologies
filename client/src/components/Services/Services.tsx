@@ -1,3 +1,9 @@
+import { useRef } from 'react'
+import { motion, useMotionValue, useSpring, useTransform, type Variants } from 'framer-motion'
+import {
+  Code2, Monitor, Cpu, Brain, Smartphone, Share2,
+  MapPin, Activity, Camera, Building2, HeartPulse, CreditCard
+} from 'lucide-react'
 import './Services.css'
 
 interface Service {
@@ -6,117 +12,256 @@ interface Service {
   description: string
   features: string[]
   gradient: string
+  size?: 'large' | 'normal'
 }
 
 const services: Service[] = [
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="12" y1="2" x2="12" y2="22" opacity="0.3" />
-      </svg>
-    ),
+    icon: <Code2 size={28} />,
     title: 'Website Development',
     description: 'Custom responsive websites, landing pages, and e-commerce solutions that captivate visitors and drive conversions.',
     features: ['Custom Design', 'SEO Optimized', 'Fast Loading', 'CMS Integration'],
-    gradient: 'linear-gradient(135deg, #6C63FF, #8B7FFF)',
+    gradient: 'linear-gradient(135deg, #A855F7, #C084FC)',
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-    ),
+    icon: <Monitor size={28} />,
     title: 'Web Applications',
     description: 'Scalable full-stack web applications built with modern frameworks for complex business workflows.',
     features: ['React / Next.js', 'Real-time Features', 'API Development', 'Cloud Deployment'],
-    gradient: 'linear-gradient(135deg, #00D9FF, #0EA5E9)',
+    gradient: 'linear-gradient(135deg, #06B6D4, #22D3EE)',
+    size: 'large',
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" />
-      </svg>
-    ),
+    icon: <Cpu size={28} />,
     title: 'Software Development',
     description: 'Robust desktop software for Windows and Linux — from utilities to enterprise-grade applications.',
     features: ['Windows Apps', 'Linux Apps', 'Cross-Platform', 'System Integration'],
     gradient: 'linear-gradient(135deg, #10B981, #34D399)',
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93" /><path d="M8.56 9.93A4.001 4.001 0 0 1 12 2" opacity="0.5" /><path d="M17.5 15.5c1.28.66 2.5 1.8 2.5 3.5v1H4v-1c0-1.7 1.22-2.84 2.5-3.5" /><circle cx="12" cy="13" r="3" />
-      </svg>
-    ),
+    icon: <Brain size={28} />,
     title: 'AI-Powered Solutions',
     description: 'Intelligent automation, chatbots, and machine learning models to supercharge your operations.',
     features: ['Custom Chatbots', 'ML Models', 'Data Analytics', 'Process Automation'],
     gradient: 'linear-gradient(135deg, #F59E0B, #FBBF24)',
+    size: 'large',
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
-      </svg>
-    ),
+    icon: <Smartphone size={28} />,
     title: 'Mobile App Development',
     description: 'Beautiful native and cross-platform applications for Android and iOS that users love.',
     features: ['Android Apps', 'iOS Apps', 'Flutter / React Native', 'App Store Launch'],
     gradient: 'linear-gradient(135deg, #F43F5E, #FB7185)',
   },
   {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4l4.5 16.5 3.5-7 7-3.5L4 4z" /><path d="M15 15l6 6" />
-      </svg>
-    ),
+    icon: <Share2 size={28} />,
     title: 'Social Media Management',
     description: 'Strategic social media marketing to boost your brand presence, engagement, and business growth.',
     features: ['Content Strategy', 'Brand Growth', 'Paid Campaigns', 'Analytics & Reports'],
+    gradient: 'linear-gradient(135deg, #EC4899, #F472B6)',
+    size: 'large',
+  },
+  {
+    icon: <MapPin size={28} />,
+    title: 'GPS Integration & Tracking',
+    description: 'Real-time GPS tracking systems for fleet management, asset monitoring, and location-based services.',
+    features: ['Fleet Tracking', 'Geofencing', 'Route Optimization', 'Live Maps'],
+    gradient: 'linear-gradient(135deg, #14B8A6, #2DD4BF)',
+  },
+  {
+    icon: <Activity size={28} />,
+    title: 'Telemetrics & IoT Monitoring',
+    description: 'Advanced telemetry data collection, real-time sensor monitoring, and IoT device management systems.',
+    features: ['Real-time Dashboards', 'Sensor Integration', 'Predictive Maintenance', 'Data Pipelines'],
+    gradient: 'linear-gradient(135deg, #EAB308, #FACC15)',
+    size: 'large',
+  },
+  {
+    icon: <Camera size={28} />,
+    title: 'AI Camera & Computer Vision',
+    description: 'Cutting-edge computer vision for smart surveillance, quality inspection, and automated visual analysis.',
+    features: ['Object Detection', 'Facial Recognition', 'Behavior Analysis', 'Edge AI'],
+    gradient: 'linear-gradient(135deg, #06B6D4, #67E8F9)',
+  },
+  {
+    icon: <Building2 size={28} />,
+    title: 'ERP & CRM Systems',
+    description: 'Enterprise resource planning and customer relationship management tailored to your business workflows.',
+    features: ['Inventory Mgmt', 'Sales Pipeline', 'HR Module', 'Custom Workflows'],
     gradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
+    size: 'large',
+  },
+  {
+    icon: <HeartPulse size={28} />,
+    title: 'Healthcare Management Systems',
+    description: 'Digital healthcare platforms for hospitals, clinics, and telemedicine with patient management and EMR.',
+    features: ['Patient Records', 'Appointment System', 'Telemedicine', 'Pharmacy Mgmt'],
+    gradient: 'linear-gradient(135deg, #EF4444, #F87171)',
+  },
+  {
+    icon: <CreditCard size={28} />,
+    title: 'Fintech & Payment Solutions',
+    description: 'Secure financial technology solutions including payment gateways, digital wallets, and banking integrations.',
+    features: ['Payment Gateway', 'Digital Wallet', 'KYC Integration', 'Transaction Analytics'],
+    gradient: 'linear-gradient(135deg, #0EA5E9, #38BDF8)',
+    size: 'large',
   },
 ]
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 },
+  },
+}
+
+// Server blade animation: slide in horizontally from alternating sides
+const bladeVariants: Variants = {
+  hidden: (custom: number) => ({
+    opacity: 0,
+    x: custom % 2 === 0 ? 120 : -120,
+    scale: 0.95,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { type: 'spring' as const, stiffness: 60, damping: 12 },
+  },
+}
+
+function ServerBlade({
+  children,
+  className,
+  gradient,
+  index
+}: {
+  children: React.ReactNode;
+  className: string;
+  gradient: string;
+  index: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  // Subtle tilt to emphasize the 3D hardware feel
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [4, -4]), { stiffness: 400, damping: 40 })
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-4, 4]), { stiffness: 400, damping: 40 })
+
+  function handleMouse(e: React.MouseEvent) {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    x.set((e.clientX - rect.left) / rect.width - 0.5)
+    y.set((e.clientY - rect.top) / rect.height - 0.5)
+  }
+
+  function handleLeave() {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      onMouseMove={handleMouse}
+      onMouseLeave={handleLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: 'preserve-3d',
+        perspective: 1000,
+      }}
+      custom={index}
+      variants={bladeVariants}
+      whileHover={{ scale: 1.02, zIndex: 10, transition: { duration: 0.2 } }}
+    >
+      {/* Hardware UI: Server Panel on the left edge */}
+      <div className="server-blade__panel">
+        <div className="server-blade__handle">
+          <div className="handle-grip"></div>
+        </div>
+        <div className="server-blade__leds">
+          <div className="led led--pwr" title="Power"></div>
+          <div className="led led--net" title="Network"></div>
+          <div className="led led--disk" title="Disk Activity"></div>
+        </div>
+        <div className="server-blade__grill">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="server-blade__content">
+        {children}
+      </div>
+
+      <div className="services__card-glow" style={{ background: gradient }}></div>
+      <div className="services__card-border" style={{ background: gradient }}></div>
+    </motion.div>
+  )
+}
 
 export default function Services() {
   return (
     <section className="services section" id="services">
       <div className="container">
-        <div className="services__header fade-in">
+        <motion.div
+          className="services__header"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="section-label">What We Do</span>
           <h2 className="section-title">
-            Services We <span className="gradient-text">Offer</span>
+            Our <span className="gradient-text">Services</span>
           </h2>
           <p className="section-subtitle">
-            From concept to deployment, we provide comprehensive digital solutions
-            to help your business grow and succeed in the digital landscape.
+            From concept to deployment — comprehensive digital solutions running
+            on our high-performance infrastructure.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="services__grid">
-          {services.map((service, i) => (
-            <div
-              className="services__card glass-card fade-in"
-              key={i}
-              style={{ transitionDelay: `${i * 80}ms` }}
-            >
-              <div className="services__card-icon" style={{ background: service.gradient }}>
-                {service.icon}
-              </div>
-              <h3 className="services__card-title">{service.title}</h3>
-              <p className="services__card-desc">{service.description}</p>
+        {/* Server Rack Chassis */}
+        <div className="server-rack">
+          <div className="rack-rail rack-rail--left"></div>
+          <div className="rack-rail rack-rail--right"></div>
+          
+          <motion.div
+            className="services__bento"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {services.map((service, i) => (
+              <ServerBlade
+                key={i}
+                index={i}
+                className={`services__card glass-card ${service.size === 'large' ? 'services__card--large' : ''}`}
+                gradient={service.gradient}
+              >
+                <div className="services__card-icon" style={{ background: service.gradient }}>
+                  {service.icon}
+                </div>
+                <h3 className="services__card-title">{service.title}</h3>
+                <p className="services__card-desc">{service.description}</p>
 
-              <div className="services__card-features">
-                {service.features.map((f, j) => (
-                  <span className="services__feature-tag" key={j}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--clr-accent-green)" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
-                    {f}
-                  </span>
-                ))}
-              </div>
-
-              <div className="services__card-glow" style={{ background: service.gradient }}></div>
-            </div>
-          ))}
+                <div className="services__card-features">
+                  {service.features.map((f, j) => (
+                    <span className="services__feature-tag" key={j}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </ServerBlade>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

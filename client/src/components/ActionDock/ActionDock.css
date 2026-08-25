@@ -1,0 +1,107 @@
+.action-dock {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-dock__items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-dock__item-wrapper {
+  position: relative;
+}
+
+.action-dock__item {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 26, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  color: var(--dock-color, var(--clr-text));
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  text-decoration: none;
+}
+
+.action-dock__item:hover {
+  transform: scale(1.2);
+  border-color: var(--dock-color);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--dock-color) 30%, transparent);
+  background: rgba(10, 10, 26, 1);
+}
+
+.action-dock__tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--clr-text);
+  background: rgba(10, 10, 26, 0.95);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.action-dock__item-wrapper:hover .action-dock__tooltip {
+  opacity: 1;
+}
+
+/* Main trigger */
+.action-dock__trigger {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px var(--clr-primary-glow);
+  transition: box-shadow 0.3s;
+}
+
+.action-dock__trigger:hover {
+  box-shadow: 0 8px 30px var(--clr-primary-glow);
+}
+
+@media (max-width: 768px) {
+  .action-dock {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .action-dock__item {
+    width: 42px;
+    height: 42px;
+  }
+
+  .action-dock__trigger {
+    width: 50px;
+    height: 50px;
+  }
+
+  .action-dock__tooltip {
+    display: none;
+  }
+}

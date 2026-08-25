@@ -207,6 +207,12 @@ export default function Contact() {
                       { value: 'ai', label: 'AI-Powered Solution' },
                       { value: 'mobile', label: 'Mobile App Development' },
                       { value: 'social', label: 'Social Media Management' },
+                      { value: 'gps', label: 'GPS Integration & Tracking' },
+                      { value: 'telemetrics', label: 'Telemetrics & IoT' },
+                      { value: 'aicamera', label: 'AI Camera & Vision' },
+                      { value: 'erp', label: 'ERP & CRM Systems' },
+                      { value: 'healthcare', label: 'Healthcare Systems' },
+                      { value: 'fintech', label: 'Fintech & Payments' },
                       { value: 'other', label: 'Other' },
                     ]}
                   />

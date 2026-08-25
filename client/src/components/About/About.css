@@ -1,5 +1,7 @@
 .about {
   background: var(--clr-bg-alt);
+  position: relative;
+  z-index: 1;
 }
 
 .about__grid {
@@ -50,14 +52,14 @@
   gap: var(--space-sm);
   padding: var(--space-xl) var(--space-md);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(168, 85, 247, 0.02);
   border: 1px solid var(--clr-border);
   transition: all var(--transition-base);
 }
 
 .about__icon-item:hover {
-  background: rgba(108, 99, 255, 0.05);
-  border-color: rgba(108, 99, 255, 0.15);
+  background: rgba(168, 85, 247, 0.06);
+  border-color: rgba(168, 85, 247, 0.15);
   transform: translateY(-2px);
 }
 
@@ -77,31 +79,16 @@
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--clr-text);
-  animation: float 6s ease-in-out infinite;
 }
 
 .about__float-badge--1 {
   top: 0;
   right: 0;
-  animation-delay: 0s;
 }
 
 .about__float-badge--2 {
   bottom: 0;
   left: 0;
-  animation-delay: -3s;
-}
-
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
 }
 
 /* Content Side */
@@ -114,11 +101,44 @@
   font-size: var(--fs-base);
 }
 
+/* Stats Grid */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.about__stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.about__stat-number {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 800;
+}
+
+.about__stat-label {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  font-weight: 500;
+}
+
 /* Timeline */
 .about__timeline {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-xl);
   padding-left: var(--space-lg);
-  border-left: 2px solid var(--clr-border-light);
+  border-left: 2px solid rgba(168, 85, 247, 0.15);
 }
 
 .about__timeline-item {
@@ -139,7 +159,7 @@
   height: 10px;
   border-radius: 50%;
   background: var(--clr-primary);
-  box-shadow: 0 0 0 4px var(--clr-bg-alt), 0 0 0 5px var(--clr-primary);
+  box-shadow: 0 0 0 4px var(--clr-bg-alt), 0 0 0 5px var(--clr-primary), 0 0 12px var(--clr-primary-glow);
 }
 
 .about__timeline-content {
@@ -168,6 +188,10 @@
 
   .about__visual {
     order: -1;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

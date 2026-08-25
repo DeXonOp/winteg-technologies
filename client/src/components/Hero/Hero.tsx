@@ -1,5 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
+import { motion } from 'framer-motion'
 import CustomSelect from '../CustomSelect/CustomSelect'
+import CountUp from '../CountUp/CountUp'
 import './Hero.css'
 
 const phrases = [
@@ -8,9 +10,29 @@ const phrases = [
   'AI-Powered Solutions',
   'Mobile Applications',
   'Desktop Software',
-  'Social Media Growth',
+  'GPS & Telemetrics',
+  'Smart Camera Systems',
+  'Enterprise Software',
   'Winteg Technologies',
 ]
+
+const allServices = [
+  { value: 'web', label: 'Website Development' },
+  { value: 'webapp', label: 'Web Application' },
+  { value: 'software', label: 'Software Development' },
+  { value: 'ai', label: 'AI-Powered Solution' },
+  { value: 'mobile', label: 'Mobile App Development' },
+  { value: 'social', label: 'Social Media Management' },
+  { value: 'gps', label: 'GPS Integration & Tracking' },
+  { value: 'telemetrics', label: 'Telemetrics & IoT' },
+  { value: 'aicamera', label: 'AI Camera & Vision' },
+  { value: 'erp', label: 'ERP & CRM Systems' },
+  { value: 'healthcare', label: 'Healthcare Systems' },
+  { value: 'fintech', label: 'Fintech & Payments' },
+  { value: 'other', label: 'Other' },
+]
+
+const titleWords = ['We', 'Build', 'The', 'Future']
 
 export default function Hero() {
   const [currentPhrase, setCurrentPhrase] = useState(0)
@@ -116,36 +138,69 @@ export default function Hero() {
         <div className="hero__gradient-orb hero__gradient-orb--2"></div>
         <div className="hero__gradient-orb hero__gradient-orb--3"></div>
         <div className="hero__grid"></div>
+
+        {/* Floating geometric shapes */}
+        <div className="hero__shape hero__shape--1"></div>
+        <div className="hero__shape hero__shape--2"></div>
+        <div className="hero__shape hero__shape--3"></div>
       </div>
 
       <div className="hero__content container">
         <div className="hero__grid-layout">
           {/* Left Column: Headlines, Subtitles, Stats */}
-          <div className="hero__left-col">
-            <div className="hero__badge fade-in">
+          <motion.div
+            className="hero__left-col"
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <motion.div
+              className="hero__badge"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+            >
               <span className="hero__badge-dot"></span>
               Available for New Projects
-            </div>
+            </motion.div>
 
-            <h1 className="hero__title fade-in">
-              We Build <br />
+            <h1 className="hero__title">
+              {titleWords.map((word, i) => (
+                <motion.span
+                  key={i}
+                  className="hero__title-word"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.12, duration: 0.6, ease: "easeOut" }}
+                >
+                  {word}{' '}
+                </motion.span>
+              ))}
+              <br />
               <span className="hero__typed-wrapper">
                 <span className="gradient-text hero__typed">{displayText}</span>
                 <span className="hero__cursor">|</span>
               </span>
-              <br />
-              That Drive Results
             </h1>
 
-            <p className="hero__subtitle fade-in">
+            <motion.p
+              className="hero__subtitle"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
               Winteg Technologies (wintegtechnologies.com) is a leading web development, software engineering,
               and AI solutions company from India. We build custom websites, web applications, mobile apps,
               AI-powered tools, and provide social media management — all under one roof.
               Whether you search for winteg, winteg technologies, or wintegtechnologies — we are here to serve you.
-            </p>
+            </motion.p>
 
-            <div className="hero__actions fade-in">
-              {/* This button is only visible on mobile (styled via Hero.css) */}
+            <motion.div
+              className="hero__actions"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
               <a
                 href="#hero-contact"
                 className="btn btn-primary btn--lg hero__quote-btn"
@@ -155,11 +210,8 @@ export default function Hero() {
                   if (el) {
                     const rect = el.getBoundingClientRect()
                     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-                    const targetY = rect.top + scrollTop - 72 - 16 // 72px navbar height + 16px spacing
-                    window.scrollTo({
-                      top: targetY,
-                      behavior: 'smooth'
-                    })
+                    const targetY = rect.top + scrollTop - 72 - 16
+                    window.scrollTo({ top: targetY, behavior: 'smooth' })
                   }
                 }}
               >
@@ -178,43 +230,47 @@ export default function Hero() {
                     const rect = el.getBoundingClientRect()
                     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
                     const targetY = rect.top + scrollTop - 72
-                    window.scrollTo({
-                      top: targetY,
-                      behavior: 'smooth'
-                    })
+                    window.scrollTo({ top: targetY, behavior: 'smooth' })
                   }
                 }}
               >
                 View Our Works
               </a>
-            </div>
+            </motion.div>
 
             {/* Stats */}
-            <div className="hero__stats fade-in">
-              <div className="hero__stat">
-                <span className="hero__stat-number">50+</span>
-                <span className="hero__stat-label">Projects Done</span>
-              </div>
-              <div className="hero__stat-divider"></div>
-              <div className="hero__stat">
-                <span className="hero__stat-number">30+</span>
-                <span className="hero__stat-label">Happy Clients</span>
-              </div>
-              <div className="hero__stat-divider"></div>
-              <div className="hero__stat">
-                <span className="hero__stat-number">3+</span>
-                <span className="hero__stat-label">Years Exp</span>
-              </div>
-              <div className="hero__stat-divider"></div>
-              <div className="hero__stat">
-                <span className="hero__stat-number">99%</span>
-                <span className="hero__stat-label">Satisfaction</span>
-              </div>
-            </div>
-          </div>
+            <motion.div
+              className="hero__stats"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.6 }}
+            >
+              {[
+                { target: 50, suffix: '+', label: 'Projects Done' },
+                { target: 30, suffix: '+', label: 'Happy Clients' },
+                { target: 3, suffix: '+', label: 'Years Exp' },
+                { target: 99, suffix: '%', label: 'Satisfaction' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  className="hero__stat"
+                  whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                >
+                  <CountUp target={stat.target} suffix={stat.suffix} className="hero__stat-number" />
+                  <span className="hero__stat-label">{stat.label}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
 
-          {/* Right Column: Contact/Quote Form (with ID for smooth scrolling) */}
-          <div className="hero__right-col fade-in-right" id="hero-contact">
+          {/* Right Column: Contact/Quote Form */}
+          <motion.div
+            className="hero__right-col"
+            id="hero-contact"
+            initial={{ opacity: 0, scale: 0.9, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, type: 'spring', stiffness: 80 }}
+          >
             <div className="contact__form-wrapper">
               <form className="contact__form glass-card" onSubmit={handleSubmit}>
                 <h3 className="hero__form-title">Get a Free Quote</h3>
@@ -278,15 +334,7 @@ export default function Hero() {
                       onChange={(val) => setFormData({ ...formData, service: val })}
                       placeholder="Select service"
                       required
-                      options={[
-                        { value: 'web', label: 'Website Development' },
-                        { value: 'webapp', label: 'Web Application' },
-                        { value: 'software', label: 'Software Development' },
-                        { value: 'ai', label: 'AI-Powered Solution' },
-                        { value: 'mobile', label: 'Mobile App Development' },
-                        { value: 'social', label: 'Social Media Management' },
-                        { value: 'other', label: 'Other' },
-                      ]}
+                      options={allServices}
                     />
                   </div>
                 </div>
@@ -328,14 +376,19 @@ export default function Hero() {
                 </button>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="hero__scroll">
+      <motion.div
+        className="hero__scroll"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
         <div className="hero__scroll-line"></div>
-      </div>
+      </motion.div>
     </section>
   )
 }

@@ -8,7 +8,7 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.config import settings
-from app.routers import contact, health, newsletter, projects, chat, ai_chat
+from app.routers import contact, health, newsletter, projects, chat, ai_chat, visitors, estimate
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -49,6 +49,8 @@ app.include_router(projects.router)
 app.include_router(newsletter.router)
 app.include_router(chat.router)
 app.include_router(ai_chat.router)
+app.include_router(visitors.router)
+app.include_router(estimate.router)
 
 
 # ── Root redirect ───────────────────────────────────────────
