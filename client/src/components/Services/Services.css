@@ -72,7 +72,7 @@
   overflow: hidden;
   cursor: default;
   display: flex;
-  flex-direction: row; /* Hardware panel on left, content on right */
+  flex-direction: column; /* Changed from row to column for top panel */
   background: #0a0a10;
   border: 1px solid #222;
   border-radius: 6px;
@@ -84,49 +84,74 @@
   grid-column: span 2;
 }
 
-/* Hardware UI Panel */
+/* Hardware UI Panel (Now at the top) */
 .server-blade__panel {
-  width: 54px;
+  width: 100%;
+  height: 48px;
   flex-shrink: 0;
-  background: linear-gradient(180deg, #1a1a24, #0f0f15);
-  border-right: 1px solid #000;
+  background: linear-gradient(90deg, #1a1a24, #0f0f15);
+  border-bottom: 1px solid #000;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 16px 0;
-  box-shadow: inset -1px 0 2px rgba(255, 255, 255, 0.05);
+  padding: 0 16px;
+  box-shadow: inset 0 -1px 2px rgba(255, 255, 255, 0.05);
   position: relative;
   z-index: 5;
 }
 
-/* Server handle for pulling out the blade */
+/* Server Label */
+.server-blade__label {
+  font-size: 0.6rem;
+  font-family: monospace;
+  color: var(--clr-text-secondary);
+  letter-spacing: 2px;
+  margin-right: 20px;
+  opacity: 0.6;
+  text-shadow: 0 0 2px rgba(255,255,255,0.2);
+}
+
+/* Server Handle */
 .server-blade__handle {
-  width: 20px;
-  height: 48px;
-  background: linear-gradient(90deg, #222, #444, #1a1a1a);
+  width: 48px;
+  height: 20px;
+  background: linear-gradient(180deg, #111, #3a3a3a 30%, #555 50%, #2a2a2a 80%, #111);
   border-radius: 4px;
-  margin-bottom: 24px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.6), inset 1px 1px 1px rgba(255, 255, 255, 0.2);
+  margin-right: 24px;
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.8), 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.4),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #000;
+  position: relative;
+}
+.server-blade__handle::after {
+  content: '';
+  position: absolute;
+  top: 4px; bottom: 4px; left: 4px; right: 4px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.5);
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.05), transparent);
 }
 
 .handle-grip {
-  width: 6px;
-  height: 24px;
-  background: #0a0a0a;
-  border-radius: 2px;
-  box-shadow: inset 1px 0 2px rgba(255, 255, 255, 0.1);
+  width: 24px;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, #0a0a0a 0px, #0a0a0a 2px, #222 2px, #222 4px);
+  border-radius: 1px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 2;
 }
 
 /* Status LEDs */
 .server-blade__leds {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-right: 24px;
 }
 
 .led {
@@ -163,20 +188,50 @@
   10%, 30%, 50% { background: #F59E0B; box-shadow: 0 0 10px #F59E0B; }
 }
 
+/* Ports */
+.server-blade__ports {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-right: 24px;
+}
+.port {
+  width: 14px;
+  height: 14px;
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 2px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.9);
+  position: relative;
+}
+.port::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #ef4444; /* optical glow */
+  box-shadow: 0 0 6px #ef4444;
+  opacity: 0.6;
+}
+
 /* Ventilation Grill */
 .server-blade__grill {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 5px;
-  margin-top: auto;
+  margin-left: auto; /* Push grill to the far right */
 }
 
 .server-blade__grill span {
-  width: 28px;
-  height: 4px;
+  width: 4px;
+  height: 16px;
   background: #000;
-  border-radius: 2px;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+  box-shadow: 
+    inset 2px 0 3px rgba(0, 0, 0, 0.9),
+    1px 0 1px rgba(255, 255, 255, 0.1);
 }
 
 /* Main Content Area */
@@ -187,8 +242,39 @@
   flex-direction: column;
   position: relative;
   z-index: 2;
-  /* Carbon fiber or subtle pattern for the top of the server blade */
-  background: radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.03) 0%, transparent 60%);
+  background: radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.4) 0%, rgba(10, 10, 16, 0.9) 100%);
+  overflow: hidden;
+}
+
+/* Glowing Data Streams Background */
+.data-stream {
+  position: absolute;
+  top: -100%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--clr-primary), transparent);
+  opacity: 0.15;
+  z-index: -1;
+  animation: streamDown 4s linear infinite;
+}
+
+.data-stream-1 {
+  left: 30%;
+  animation-delay: 0s;
+  animation-duration: 3s;
+}
+
+.data-stream-2 {
+  left: 70%;
+  background: linear-gradient(to bottom, transparent, var(--clr-secondary), transparent);
+  animation-delay: 1.5s;
+  animation-duration: 4.5s;
+}
+
+@keyframes streamDown {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(200%); opacity: 0; }
 }
 
 .services__card-icon {
@@ -275,6 +361,147 @@
 
 .services__card:hover .services__card-border {
   opacity: 0.5;
+}
+
+/* =========================================================================
+   TRUE 3D SLIDING DRAWER MECHANICS
+   ========================================================================= */
+
+/* Make the Slot Container a 3D space */
+.services__card {
+  perspective: 1500px;
+  position: relative;
+  min-height: 250px;
+}
+.services__card.is-active {
+  z-index: 50; /* Ensure active drawer overlays rack */
+}
+
+/* The dark, empty hole in the rack */
+.slot-interior {
+  position: absolute;
+  inset: 0;
+  background: #020204;
+  border-radius: 6px;
+  border: 1px solid #111;
+  box-shadow: inset 0 20px 50px rgba(0,0,0,0.9);
+  z-index: 0;
+}
+
+/* The sliding 3D chassis */
+.drawer-chassis {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+/* FRONT FACE (Normal Card contents) */
+.drawer-faceplate {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 16, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  transform: translateZ(1px); 
+  backface-visibility: hidden;
+}
+
+/* MOTHERBOARD (The inside floor of the drawer) */
+.drawer-motherboard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 350px; /* How deep the drawer goes back into the rack */
+  background: linear-gradient(to top, #09090c, #13131a);
+  border: 1px solid #222;
+  border-top: none;
+  transform-origin: bottom;
+  transform: rotateX(-90deg); /* Folds exactly 90 degrees backwards into the slot */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.motherboard-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.motherboard-traces {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.drawer-details h4 {
+  font-size: 0.9rem;
+  color: white;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.drawer-details .detailed-info {
+  font-family: monospace;
+  background: rgba(0,0,0,0.3);
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: #06B6D4;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.drawer-sidebar .hardware-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  background: rgba(255,255,255,0.02);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.drawer-sidebar .stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--clr-text-secondary);
+}
+
+.drawer-sidebar .stat span {
+  color: white;
+  font-weight: bold;
+}
+
+/* Handle trigger styles */
+.server-blade__handle {
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.1s;
+}
+.server-blade__handle:hover {
+  filter: brightness(1.5);
+}
+.server-blade__handle:active {
+  transform: scale(0.95);
+}
+.is-active .server-blade__handle .handle-grip {
+  background: repeating-linear-gradient(90deg, #0a0a0a 0px, #0a0a0a 2px, #06B6D4 2px, #06B6D4 4px);
 }
 
 /* Responsive */
