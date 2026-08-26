@@ -139,6 +139,11 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
+          onViewportEnter={() => {
+            setTimeout(() => {
+              setCurrentPage(p => p === 0 ? 1 : p)
+            }, 800)
+          }}
         >
           <span className="section-label">Our Work</span>
           <h2 className="section-title">

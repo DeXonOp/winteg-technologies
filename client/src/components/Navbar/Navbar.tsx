@@ -19,7 +19,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 150)
+      setScrolled(window.scrollY > 20)
 
       if (window.location.pathname !== '/') return;
 

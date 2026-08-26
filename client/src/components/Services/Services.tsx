@@ -169,16 +169,16 @@ const containerVariants: Variants = {
 }
 
 const bladeVariants: Variants = {
-  hidden: (custom: number) => ({
+  hidden: {
     opacity: 0,
-    x: custom % 2 === 0 ? 120 : -120,
-    scale: 0.95,
-  }),
+    y: 60,
+    scale: 0.9,
+  },
   visible: {
     opacity: 1,
-    x: 0,
+    y: 0,
     scale: 1,
-    transition: { type: 'spring' as const, stiffness: 60, damping: 12 },
+    transition: { type: 'spring' as const, stiffness: 100, damping: 15 },
   },
 }
 
@@ -241,6 +241,8 @@ export default function Services() {
                 index={i}
                 service={service}
                 isSelected={selectedId === i}
+                onMouseEnter={() => setSelectedId(i)}
+                onMouseLeave={() => setSelectedId(null)}
                 onClick={() => setSelectedId(selectedId === i ? null : i)}
               />
             ))}
@@ -256,18 +258,26 @@ function ServerBlade({
   service,
   index,
   isSelected,
-  onClick
+  onClick,
+  onMouseEnter,
+  onMouseLeave
 }: {
   service: Service;
   index: number;
   isSelected: boolean;
   onClick: () => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }) {
   return (
     <motion.div 
-      className={`services__card ${service.size === 'large' ? 'services__card--large' : ''} ${isSelected ? 'is-active' : ''}`}
+      className={`services__card ${isSelected ? 'is-active' : ''}`}
       custom={index}
       variants={bladeVariants}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      style={{ cursor: 'pointer' }}
     >
       {/* The Slot Interior (Dark hole left behind in the rack) */}
       <div className="slot-interior"></div>
@@ -341,7 +351,6 @@ function ServerBlade({
 
             <div 
               className="server-blade__handle" 
-              onClick={onClick}
               title={isSelected ? "Push drawer in" : "Pull drawer out"}
             >
               <div className="handle-grip"></div>

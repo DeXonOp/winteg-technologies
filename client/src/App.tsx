@@ -78,11 +78,11 @@ function App() {
       <main id="main-content">
         <Hero />
         <div className="section-divider"></div>
+        <About />
+        <div className="section-divider"></div>
         <Services />
         <div className="section-divider"></div>
         <CostEstimator />
-        <div className="section-divider"></div>
-        <About />
         <div className="section-divider"></div>
         <Portfolio />
         <div className="section-divider"></div>

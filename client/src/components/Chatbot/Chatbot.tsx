@@ -184,12 +184,15 @@ export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps
           </div>
           <button 
             className="btn-ghost" 
-            style={{ padding: '4px', fontSize: '12px' }}
-            onClick={handleClearHistory}
-            title="Clear Chat History"
-            aria-label="Clear Chat History"
+            style={{ padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--clr-text-secondary)' }}
+            onClick={() => setIsOpen(false)}
+            title="Close Chat"
+            aria-label="Close Chat"
           >
-            Clear
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
         </div>
         
