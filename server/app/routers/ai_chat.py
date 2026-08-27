@@ -11,8 +11,8 @@ class ChatRequest(BaseModel):
     session_id: str
     messages: list[dict]
 
-# Using the key previously hardcoded in the frontend. Ideally this goes into .env
-GROQ_API_KEY = "[REDACTED]"
+# The GROQ_API_KEY is now loaded from .env via settings
+GROQ_API_KEY = settings.GROQ_API_KEY
 
 @router.post("/ask")
 async def ask_ai(request: ChatRequest):

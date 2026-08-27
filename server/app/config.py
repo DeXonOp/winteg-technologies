@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
+    
+    # AI Config
+    GROQ_API_KEY: str = ""
 
     @property
     def cors_origin_list(self) -> list[str]:
