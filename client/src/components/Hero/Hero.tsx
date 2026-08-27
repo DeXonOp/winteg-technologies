@@ -5,30 +5,30 @@ import CountUp from '../CountUp/CountUp'
 import './Hero.css'
 
 const phrases = [
-  'Stunning Websites',
-  'Powerful Web Apps',
+  'Telemetrics & IoT',
   'AI-Powered Solutions',
-  'Mobile Applications',
-  'Desktop Software',
-  'GPS & Telemetrics',
-  'Smart Camera Systems',
-  'Enterprise Software',
+  'GPS Integration & Tracking',
+  'IoT Management Systems',
+  'AI Cameras & Computer Vision',
+  'ERP & CRM Architectures',
+  'Healthcare IT Solutions',
+  'Fintech & Payment Systems',
   'Winteg Technologies',
 ]
 
 const allServices = [
-  { value: 'web', label: 'Website Development' },
-  { value: 'webapp', label: 'Web Application' },
-  { value: 'software', label: 'Software Development' },
-  { value: 'ai', label: 'AI-Powered Solution' },
-  { value: 'mobile', label: 'Mobile App Development' },
-  { value: 'social', label: 'Social Media Management' },
+  { value: 'telemetrics', label: 'Telemetrics & IoT Monitoring' },
+  { value: 'ai', label: 'AI-Powered Solutions' },
   { value: 'gps', label: 'GPS Integration & Tracking' },
-  { value: 'telemetrics', label: 'Telemetrics & IoT' },
-  { value: 'aicamera', label: 'AI Camera & Vision' },
+  { value: 'aicamera', label: 'AI Camera & Computer Vision' },
   { value: 'erp', label: 'ERP & CRM Systems' },
-  { value: 'healthcare', label: 'Healthcare Systems' },
-  { value: 'fintech', label: 'Fintech & Payments' },
+  { value: 'healthcare', label: 'Healthcare Management Systems' },
+  { value: 'fintech', label: 'Fintech & Payment Solutions' },
+  { value: 'software', label: 'Software Development' },
+  { value: 'social', label: 'Social Media Management' },
+  { value: 'webapp', label: 'Web Applications' },
+  { value: 'mobile', label: 'Mobile App Development' },
+  { value: 'web', label: 'Website Development' },
   { value: 'other', label: 'Other' },
 ]
 
@@ -189,10 +189,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              Winteg Technologies (wintegtechnologies.com) is a leading web development, software engineering,
-              and AI solutions company from India. We build custom websites, web applications, mobile apps,
-              AI-powered tools, and provide social media management — all under one roof.
-              Whether you search for winteg, winteg technologies, or wintegtechnologies — we are here to serve you.
+              Winteg Technologies (wintegtechnologies.com) is a leading advanced engineering and AI solutions company from India. We architect enterprise-grade telemetrics systems, custom AI agents, GPS tracking infrastructure, computer vision pipelines, and highly scalable cloud solutions.
             </motion.p>
 
             <motion.div

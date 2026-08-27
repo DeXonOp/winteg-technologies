@@ -3,14 +3,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import './CostEstimator.css'
 
 const projectTypes = [
-  { id: 'website', label: 'Website', icon: '🌐' },
-  { id: 'webapp', label: 'Web App', icon: '💻' },
-  { id: 'mobile', label: 'Mobile App', icon: '📱' },
-  { id: 'software', label: 'Desktop Software', icon: '🖥️' },
-  { id: 'ai', label: 'AI Solution', icon: '🤖' },
-  { id: 'ecommerce', label: 'E-Commerce', icon: '🛒' },
-  { id: 'erp', label: 'ERP / CRM', icon: '🏢' },
   { id: 'iot', label: 'IoT / Telemetrics', icon: '📡' },
+  { id: 'ai', label: 'AI Solutions', icon: '🤖' },
+  { id: 'gps', label: 'GPS Tracking', icon: '📍' },
+  { id: 'cv', label: 'Computer Vision', icon: '👁️' },
+  { id: 'erp', label: 'ERP / CRM', icon: '🏢' },
+  { id: 'health', label: 'Healthcare IT', icon: '🏥' },
+  { id: 'fintech', label: 'Fintech Solutions', icon: '💳' },
+  { id: 'ecommerce', label: 'E-Commerce', icon: '🛒' },
+  { id: 'software', label: 'Desktop Software', icon: '🖥️' },
+  { id: 'webapp', label: 'Web Applications', icon: '💻' },
+  { id: 'mobile', label: 'Mobile Apps', icon: '📱' },
+  { id: 'website', label: 'Websites', icon: '🌐' },
 ]
 
 const featureOptions = [
