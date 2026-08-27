@@ -160,15 +160,15 @@ export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps
     }
   }
 
-  const handleClearHistory = () => {
-    localStorage.removeItem(STORAGE_KEY)
-    sessionStorage.removeItem('winteg_human_chat')
-    setIsHumanChat(false)
-    if (wsRef.current) {
-      wsRef.current.close()
-    }
-    setMessages([{ role: 'assistant', content: 'Hi! Welcome to Winteg Technologies. How can I help you today?' }])
-  }
+  // const handleClearHistory = () => {
+  //   localStorage.removeItem(STORAGE_KEY)
+  //   sessionStorage.removeItem('winteg_human_chat')
+  //   setIsHumanChat(false)
+  //   if (wsRef.current) {
+  //     wsRef.current.close()
+  //   }
+  //   setMessages([{ role: 'assistant', content: 'Hi! Welcome to Winteg Technologies. How can I help you today?' }])
+  // }
 
   return (
     <div className="chatbot__container">

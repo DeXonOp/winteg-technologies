@@ -3,34 +3,34 @@ import { motion, AnimatePresence } from 'framer-motion'
 import './CostEstimator.css'
 
 const projectTypes = [
-  { id: 'website', label: 'Website', icon: '🌐', base: 8000 },
-  { id: 'webapp', label: 'Web App', icon: '💻', base: 25000 },
-  { id: 'mobile', label: 'Mobile App', icon: '📱', base: 30000 },
-  { id: 'software', label: 'Desktop Software', icon: '🖥️', base: 35000 },
-  { id: 'ai', label: 'AI Solution', icon: '🤖', base: 40000 },
-  { id: 'ecommerce', label: 'E-Commerce', icon: '🛒', base: 20000 },
-  { id: 'erp', label: 'ERP / CRM', icon: '🏢', base: 50000 },
-  { id: 'iot', label: 'IoT / Telemetrics', icon: '📡', base: 45000 },
+  { id: 'website', label: 'Website', icon: '🌐' },
+  { id: 'webapp', label: 'Web App', icon: '💻' },
+  { id: 'mobile', label: 'Mobile App', icon: '📱' },
+  { id: 'software', label: 'Desktop Software', icon: '🖥️' },
+  { id: 'ai', label: 'AI Solution', icon: '🤖' },
+  { id: 'ecommerce', label: 'E-Commerce', icon: '🛒' },
+  { id: 'erp', label: 'ERP / CRM', icon: '🏢' },
+  { id: 'iot', label: 'IoT / Telemetrics', icon: '📡' },
 ]
 
 const featureOptions = [
-  { id: 'auth', label: 'User Authentication', cost: 3000 },
-  { id: 'payment', label: 'Payment Integration', cost: 5000 },
-  { id: 'admin', label: 'Admin Dashboard', cost: 8000 },
-  { id: 'api', label: 'API Integration', cost: 4000 },
-  { id: 'realtime', label: 'Real-time Features', cost: 6000 },
-  { id: 'analytics', label: 'Analytics & Reports', cost: 5000 },
-  { id: 'notifications', label: 'Push Notifications', cost: 3000 },
-  { id: 'multilang', label: 'Multi-language', cost: 4000 },
-  { id: 'seo', label: 'Advanced SEO', cost: 3000 },
-  { id: 'chat', label: 'Chat / Messaging', cost: 5000 },
+  { id: 'auth', label: 'User Authentication' },
+  { id: 'payment', label: 'Payment Integration' },
+  { id: 'admin', label: 'Admin Dashboard' },
+  { id: 'api', label: 'API Integration' },
+  { id: 'realtime', label: 'Real-time Features' },
+  { id: 'analytics', label: 'Analytics & Reports' },
+  { id: 'notifications', label: 'Push Notifications' },
+  { id: 'multilang', label: 'Multi-language' },
+  { id: 'seo', label: 'Advanced SEO' },
+  { id: 'chat', label: 'Chat / Messaging' },
 ]
 
 const timelines = [
-  { id: 'rush', label: '2-4 Weeks', multiplier: 1.5, tag: 'Rush' },
-  { id: 'normal', label: '1-2 Months', multiplier: 1.0, tag: 'Standard' },
-  { id: 'relaxed', label: '3-4 Months', multiplier: 0.85, tag: 'Best Value' },
-  { id: 'flexible', label: '5+ Months', multiplier: 0.75, tag: 'Most Affordable' },
+  { id: 'rush', label: '2-4 Weeks', tag: 'Rush' },
+  { id: 'normal', label: '1-2 Months', tag: 'Standard' },
+  { id: 'relaxed', label: '3-4 Months', tag: 'Best Value' },
+  { id: 'flexible', label: '5+ Months', tag: 'Most Affordable' },
 ]
 
 const slideVariants = {
@@ -45,6 +45,9 @@ export default function CostEstimator() {
   const [features, setFeatures] = useState<Set<string>>(new Set())
   const [timeline, setTimeline] = useState<string | null>(null)
 
+  const [email, setEmail] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
   const toggleFeature = (id: string) => {
     setFeatures((prev) => {
       const next = new Set(prev)
@@ -54,30 +57,20 @@ export default function CostEstimator() {
     })
   }
 
-  const calculateEstimate = () => {
-    const type = projectTypes.find((p) => p.id === projectType)
-    if (!type) return { low: 0, high: 0 }
-
-    let base = type.base
-    featureOptions.forEach((f) => {
-      if (features.has(f.id)) base += f.cost
-    })
-
-    const tl = timelines.find((t) => t.id === timeline)
-    const multiplier = tl?.multiplier || 1
-
-    const total = Math.round(base * multiplier)
-    return { low: Math.round(total * 0.8), high: Math.round(total * 1.2) }
+  const handleSubmit = () => {
+    // In a real app, send data to the backend here
+    setIsSubmitted(true)
   }
 
   const canProceed = () => {
     if (step === 0) return !!projectType
     if (step === 1) return true // Features are optional
     if (step === 2) return !!timeline
+    if (step === 3) return email.length > 5 && email.includes('@')
     return true
   }
 
-  const steps = ['Project Type', 'Features', 'Timeline', 'Estimate']
+  const steps = ['Project Type', 'Features', 'Timeline', 'Submit']
 
   return (
     <section className="estimator section" id="estimator">
@@ -89,12 +82,12 @@ export default function CostEstimator() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <span className="section-label">Cost Calculator</span>
+          <span className="section-label">Start a Project</span>
           <h2 className="section-title">
-            Estimate Your <span className="gradient-text">Project Cost</span>
+            Build Your <span className="gradient-text">Dream Project</span>
           </h2>
           <p className="section-subtitle">
-            Configure your dream project and get an instant estimate. No other agency offers this!
+            Tell us about your requirements and our team will get back to you with a detailed proposal.
           </p>
         </motion.div>
 
@@ -186,39 +179,45 @@ export default function CostEstimator() {
                 </motion.div>
               )}
 
-              {step === 3 && (
+              {step === 3 && !isSubmitted && (
                 <motion.div key="step3" variants={slideVariants} initial="enter" animate="center" exit="exit" className="estimator__step-content estimator__result">
-                  <h3 className="estimator__question">Your Estimated Cost</h3>
-                  <div className="estimator__price">
-                    <span className="estimator__price-currency">₹</span>
-                    <motion.span
-                      className="estimator__price-value"
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-                    >
-                      {calculateEstimate().low.toLocaleString('en-IN')} — {calculateEstimate().high.toLocaleString('en-IN')}
-                    </motion.span>
+                  <h3 className="estimator__question">Where should we send the proposal?</h3>
+                  <div className="estimator__contact-form" style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+                    <input 
+                      type="email" 
+                      placeholder="Enter your email address" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      style={{
+                        padding: '12px 20px',
+                        width: '100%',
+                        maxWidth: '400px',
+                        borderRadius: '8px',
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        color: 'white',
+                        fontSize: '1rem',
+                        outline: 'none'
+                      }}
+                    />
+                    <p className="estimator__disclaimer">
+                      We'll review your selections and send a comprehensive project proposal to this email.
+                    </p>
                   </div>
-                  <p className="estimator__disclaimer">
-                    This is an approximate estimate. Contact us for an exact quote tailored to your needs.
+                </motion.div>
+              )}
+
+              {step === 3 && isSubmitted && (
+                <motion.div key="step3-success" variants={slideVariants} initial="enter" animate="center" exit="exit" className="estimator__step-content estimator__result">
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10B981' }}>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                  </div>
+                  <h3 className="estimator__question">Request Received!</h3>
+                  <p className="estimator__disclaimer" style={{ fontSize: '1.1rem', marginTop: '1rem' }}>
+                    Thank you! We've received your project details and will be in touch shortly at <strong>{email}</strong>.
                   </p>
-                  <a
-                    href="#contact"
-                    className="btn btn-primary btn--lg"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      const el = document.getElementById('contact')
-                      if (el) {
-                        const rect = el.getBoundingClientRect()
-                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-                        window.scrollTo({ top: rect.top + scrollTop - 72, behavior: 'smooth' })
-                      }
-                    }}
-                  >
-                    Get Exact Quote
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                  </a>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -237,12 +236,22 @@ export default function CostEstimator() {
                 disabled={!canProceed()}
                 onClick={() => setStep(step + 1)}
               >
-                {step === 2 ? 'Get Estimate' : 'Next'}
+                {step === 2 ? 'Review & Submit' : 'Next'}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </button>
             )}
-            {step === 3 && (
-              <button className="btn btn-outline" onClick={() => { setStep(0); setProjectType(null); setFeatures(new Set()); setTimeline(null) }}>
+            {step === 3 && !isSubmitted && (
+              <button
+                className="btn btn-primary"
+                disabled={!canProceed()}
+                onClick={handleSubmit}
+              >
+                Submit Request
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
+              </button>
+            )}
+            {step === 3 && isSubmitted && (
+              <button className="btn btn-outline" onClick={() => { setStep(0); setProjectType(null); setFeatures(new Set()); setTimeline(null); setIsSubmitted(false); setEmail(''); }}>
                 Start Over
               </button>
             )}

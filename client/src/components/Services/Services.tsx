@@ -288,12 +288,10 @@ function ServerBlade({
         variants={drawerVariants}
         initial="closed"
         animate={isSelected ? "open" : "closed"}
+        style={{ '--theme-color': service.color, '--theme-gradient': service.gradient } as React.CSSProperties}
       >
         {/* TOP FACE (The Internal Motherboard) */}
-        <div 
-          className="drawer-motherboard"
-          style={{ '--theme-color': service.color, '--theme-gradient': service.gradient } as React.CSSProperties}
-        >
+        <div className="drawer-motherboard">
           <div className="motherboard-content">
             <div className="drawer-header-action">
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -379,7 +377,7 @@ function ServerBlade({
             <div className="services__card-features">
               {service.features.map((f, j) => (
                 <span className="services__feature-tag" key={j}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--clr-primary)" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--theme-color)" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
                   {f}
                 </span>
               ))}

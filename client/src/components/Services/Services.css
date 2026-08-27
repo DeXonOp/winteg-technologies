@@ -437,7 +437,8 @@
   bottom: 100%; /* Attach to the top edge of the front face */
   left: 0;
   width: 100%;
-  height: 400px; /* Reverted to base depth */
+  min-height: 400px; /* Minimum depth */
+  height: max-content; /* Allow growing to fit content */
   background: 
     radial-gradient(circle at center, color-mix(in srgb, var(--theme-color) 15%, transparent) 0%, #050508 100%),
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -455,7 +456,7 @@
 }
 
 .motherboard-content {
-  padding: 30px;
+  padding: 30px 30px 40px 30px; /* Extra padding at bottom to prevent hitting faceplate edge */
   display: flex;
   flex-direction: column;
   gap: 20px;
