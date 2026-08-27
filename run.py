@@ -29,9 +29,9 @@ BOLD = "\033[1m"
 
 def print_banner():
     print(f"""
-{CYAN}{BOLD}╔══════════════════════════════════════════════╗
-║       Winteg Technologies — Dev Server       ║
-╚══════════════════════════════════════════════╝{RESET}
+{CYAN}{BOLD}------------------------------------------------
+       Winteg Technologies - Dev Server       
+------------------------------------------------{RESET}
 """)
 
 
@@ -111,7 +111,7 @@ def main():
             print(f"{RED}[ERROR]{RESET} No processes to start.")
             sys.exit(1)
 
-        print(f"\n{GREEN}{BOLD}✓ All servers running!{RESET}")
+        print(f"\n{GREEN}{BOLD}[OK] All servers running!{RESET}")
         print(f"  {CYAN}Frontend:{RESET}  http://localhost:5173")
         print(f"  {YELLOW}Backend:{RESET}   http://localhost:8000")
         print(f"  {YELLOW}API Docs:{RESET}  http://localhost:8000/api/docs")
@@ -127,10 +127,10 @@ def main():
             try:
                 proc.terminate()
                 proc.wait(timeout=5)
-                print(f"  {GREEN}✓{RESET} {name} stopped")
+                print(f"  {GREEN}[OK]{RESET} {name} stopped")
             except Exception:
                 proc.kill()
-                print(f"  {RED}✗{RESET} {name} killed")
+                print(f"  {RED}[X]{RESET} {name} killed")
         print(f"{GREEN}[SHUTDOWN]{RESET} All servers stopped. Goodbye!\n")
         sys.exit(0)
 

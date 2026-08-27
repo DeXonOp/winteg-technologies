@@ -7,12 +7,12 @@ from typing import List, Dict, Any
 
 router = APIRouter(tags=["Chat"])
 
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "[REDACTED]"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 class ChatRequest(BaseModel):
     messages: List[Dict[str, Any]]
-    model: str = "llama-3.1-8b-instant"
+    model: str = "openai/gpt-oss-20b"
     temperature: float = 0.7
     max_tokens: int = 512
 

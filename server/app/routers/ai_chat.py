@@ -12,7 +12,7 @@ class ChatRequest(BaseModel):
     messages: list[dict]
 
 # Using the key previously hardcoded in the frontend. Ideally this goes into .env
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "[REDACTED]"
 
 @router.post("/ask")
 async def ask_ai(request: ChatRequest):
@@ -22,7 +22,7 @@ async def ask_ai(request: ChatRequest):
     url = "https://api.groq.com/openai/v1/chat/completions"
     data = json.dumps({
         "messages": request.messages,
-        "model": "llama-3.1-8b-instant",
+        "model": "openai/gpt-oss-20b",
         "temperature": 0.5,
         "max_tokens": 512,
     }).encode("utf-8")
