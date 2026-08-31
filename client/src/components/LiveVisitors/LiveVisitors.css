@@ -1,12 +1,14 @@
 .live-visitors {
   position: fixed;
   bottom: 1.5rem;
-  right: 6rem;
+  right: 5.75rem;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: var(--clr-surface);
+  padding: 0 16px;
+  height: 36px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--clr-border);
@@ -41,8 +43,10 @@
 @media (max-width: 768px) {
   .live-visitors {
     bottom: 1rem;
-    right: 5rem;
+    right: 4.75rem;
     font-size: 0.7rem;
-    padding: 6px 12px;
+    padding: 0 12px;
+    height: 30px;
+    margin-bottom: 10px;
   }
 }

@@ -82,6 +82,14 @@
   transition: box-shadow 0.3s;
 }
 
+.action-dock__trigger > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
 .action-dock__trigger:hover {
   box-shadow: 0 8px 30px var(--clr-primary-glow);
 }
