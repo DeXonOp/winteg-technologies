@@ -347,11 +347,12 @@ export default function Hero() {
                     onChange={(val) => setFormData({ ...formData, budget: val })}
                     placeholder="Select budget range"
                     options={[
-                      { value: '5k-10k', label: '₹5,000 — ₹10,000' },
-                      { value: '10k-25k', label: '₹10,000 — ₹25,000' },
-                      { value: '25k-50k', label: '₹25,000 — ₹50,000' },
-                      { value: '50k-1L', label: '₹50,000 — ₹1,00,000' },
-                      { value: '1L+', label: '₹1,00,000+' },
+                      { value: '20k-50k', label: '₹20,000 — ₹50,000' },
+                      { value: '50k-1.5L', label: '₹50,000 — ₹1,50,000 (1.5 Lakhs)' },
+                      { value: '1.5L-3L', label: '₹1,50,000 — ₹3,00,000 (3 Lakhs)' },
+                      { value: '3L-7L', label: '₹3,00,000 — ₹7,00,000 (7 Lakhs)' },
+                      { value: '7L-10L', label: '₹7,00,000 — ₹10,00,000 (10 Lakhs)' },
+                      { value: '10L+', label: '₹10,00,000+ (Above 10 Lakhs)' },
                     ]}
                   />
                 </div>

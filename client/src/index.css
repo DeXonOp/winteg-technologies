@@ -8,16 +8,17 @@
    ------------------------------------------------------------ */
 /* ---------- Design Tokens ---------- */
 :root {
-  /* Colors — Crisp Premium White Theme */
-  --clr-primary: #2563EB;
-  --clr-primary-dark: #1D4ED8;
-  --clr-primary-glow: rgba(37, 99, 235, 0.2);
-  --clr-secondary: #0EA5E9;
-  --clr-secondary-glow: rgba(14, 165, 233, 0.2);
+  /* Colors — Crisp White Theme with Winteg Logo Palette (Violet -> Blue -> Cyan) */
+  --clr-primary: #7C3AED;
+  --clr-primary-dark: #6D28D9;
+  --clr-primary-glow: rgba(124, 58, 237, 0.25);
+  --clr-secondary: #2563EB;
+  --clr-secondary-glow: rgba(37, 99, 235, 0.25);
+  --clr-tertiary: #38BDF8;
   --clr-accent-green: #10B981;
   --clr-accent-orange: #F59E0B;
   --clr-accent-rose: #F43F5E;
-  --clr-accent-violet: #8B5CF6;
+  --clr-accent-violet: #7C3AED;
   --clr-bg: #FFFFFF;
   --clr-bg-alt: #F8FAFC;
   --clr-surface: #FFFFFF;
@@ -235,13 +236,13 @@ select {
   }
 }
 .gradient-text {
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+  background: linear-gradient(135deg, #7C3AED 0%, #2563EB 50%, #38BDF8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .gradient-text-warm {
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent-rose));
+  background: linear-gradient(135deg, #7C3AED, #F43F5E);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -261,9 +262,9 @@ select {
   overflow: hidden;
 }
 .btn-primary {
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+  background: linear-gradient(135deg, #7C3AED 0%, #2563EB 50%, #0EA5E9 100%);
   color: white;
-  box-shadow: 0 4px 15px var(--clr-primary-glow);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
 }
 .btn-primary:hover {
   transform: translateY(-2px);

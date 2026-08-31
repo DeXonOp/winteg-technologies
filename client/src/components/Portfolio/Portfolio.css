@@ -122,34 +122,36 @@
 .notebook-cover {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0a0a1a, #111129);
+  background: linear-gradient(135deg, #2E1065 0%, #1E1B4B 35%, #1E3A8A 70%, #0F172A 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 1px solid rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  box-shadow: inset 0 0 30px rgba(124, 58, 237, 0.2);
 }
 
 .front-cover {
-  border-left: 14px solid #04040a; /* Binder spine */
+  border-left: 14px solid #1E1035; /* Spine */
 }
 
 .back-cover {
-  border-right: 14px solid #04040a; /* Binder spine */
+  border-right: 14px solid #1E1035; /* Spine */
 }
 
 .cover-design {
   text-align: center;
   padding: 2.5rem 1.5rem;
-  border: 1px solid rgba(168, 85, 247, 0.15);
-  border-radius: 8px;
-  background: rgba(168, 85, 247, 0.02);
-  width: 80%;
-  box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(10px);
+  width: 85%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(124, 58, 237, 0.15);
 }
 
 .cover-design h2 {
-  color: var(--clr-text-secondary);
+  color: #94A3B8;
   font-size: var(--fs-xs);
   letter-spacing: 6px;
   text-transform: uppercase;
@@ -159,7 +161,7 @@
 .cover-design h1 {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-secondary));
+  background: linear-gradient(135deg, #7C3AED 0%, #2563EB 50%, #38BDF8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -168,16 +170,16 @@
 }
 
 .cover-line {
-  height: 2px;
-  width: 40px;
-  background: var(--clr-primary);
+  height: 3px;
+  width: 50px;
+  background: linear-gradient(90deg, #7C3AED, #2563EB, #38BDF8);
   margin: 0 auto var(--space-lg);
   border-radius: 2px;
 }
 
 .cover-design p {
   font-size: var(--fs-sm);
-  color: var(--clr-text-muted);
+  color: #CBD5E1;
 }
 
 .brand-mark {

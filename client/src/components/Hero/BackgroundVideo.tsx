@@ -4,9 +4,7 @@ import './BackgroundVideo.css'
 // Placeholder videos representing your industries.
 // IMPORTANT: Replace these URLs with your actual high-quality industry videos (.mp4 files hosted in your public/ directory or a CDN).
 const INDUSTRY_VIDEOS: string[] = [
-  '/videos/mining.mp4',
   '/videos/tech.mp4',
-  '/videos/ai.mp4',
   '/videos/healthcare.mp4'
 ]
 
