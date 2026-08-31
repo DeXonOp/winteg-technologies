@@ -56,7 +56,13 @@ function App() {
   }, [])
 
   if (window.location.pathname.startsWith('/admin/chat')) {
-    return <AdminChat />
+    return (
+      <div className="app">
+        <ParticleBackground />
+        <CursorGlow />
+        <AdminChat />
+      </div>
+    )
   }
 
   return (

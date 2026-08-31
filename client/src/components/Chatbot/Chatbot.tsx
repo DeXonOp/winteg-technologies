@@ -35,10 +35,13 @@ export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps
 
   // Load history on mount
   useEffect(() => {
-    let sid = localStorage.getItem('winteg_session_id')
+    // Purge legacy persistent localStorage history so users get a clean experience
+    localStorage.removeItem(STORAGE_KEY)
+
+    let sid = sessionStorage.getItem('winteg_session_id')
     if (!sid) {
       sid = Math.random().toString(36).substring(2, 15)
-      localStorage.setItem('winteg_session_id', sid)
+      sessionStorage.setItem('winteg_session_id', sid)
     }
     sessionIdRef.current = sid
 
@@ -47,7 +50,7 @@ export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps
       connectWebSocket(sid)
     }
 
-    const saved = localStorage.getItem(STORAGE_KEY)
+    const saved = sessionStorage.getItem(STORAGE_KEY)
     if (saved) {
       try {
         const parsed = JSON.parse(saved)
@@ -56,7 +59,7 @@ export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps
         console.error('Failed to parse chat history', e)
       }
     } else {
-      // Initial greeting
+      // Initial clean greeting for every new visit
       setMessages([{ role: 'assistant', content: 'Hi! Welcome to Winteg Technologies. How can I help you today?' }])
     }
   }, [])
@@ -80,10 +83,10 @@ export default function Chatbot({ isOpen: externalOpen, onToggle }: ChatbotProps
     wsRef.current = ws
   }
 
-  // Save history on change
+  // Save history for current session only
   useEffect(() => {
     if (messages.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
     }
   }, [messages])
 

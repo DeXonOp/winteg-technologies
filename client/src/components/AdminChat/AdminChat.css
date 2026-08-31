@@ -3,25 +3,49 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: var(--clr-bg);
-  background-image: radial-gradient(circle at top right, rgba(108, 99, 255, 0.1), transparent 50%),
-                    radial-gradient(circle at bottom left, rgba(0, 217, 255, 0.05), transparent 50%);
-  color: var(--clr-text);
-  font-family: var(--font-body);
+  min-height: 100vh;
+  padding: var(--space-xl);
+  position: relative;
+  z-index: 10;
+}
+
+.admin-chat-login-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+}
+
+.admin-chat-login-glow {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(circle at top right, var(--clr-primary), transparent 50%),
+              radial-gradient(circle at bottom left, var(--clr-secondary), transparent 50%);
+  opacity: 0.15;
+  filter: blur(30px);
+  z-index: -1;
+  border-radius: var(--radius-2xl);
+  animation: pulseGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.1; }
+  100% { opacity: 0.25; }
 }
 
 .admin-chat-login-form {
-  background: var(--clr-surface);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: var(--space-2xl);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--clr-border);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
-  width: 100%;
-  max-width: 420px;
   position: relative;
   overflow: hidden;
 }
@@ -29,18 +53,41 @@
 .admin-chat-login-form::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary));
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--clr-primary), var(--clr-tertiary), var(--clr-secondary));
 }
 
-.admin-chat-login-form h2 {
-  margin: 0;
+.admin-logo-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--clr-primary-glow), var(--clr-secondary-glow));
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-sm);
+  color: var(--clr-primary);
+}
+
+.admin-chat-login-header {
   text-align: center;
+}
+
+.admin-chat-login-header h2 {
+  margin: 0 0 var(--space-xs) 0;
   font-family: var(--font-heading);
   font-size: var(--fs-2xl);
   color: var(--clr-text);
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.admin-chat-login-header p {
+  margin: 0;
+  color: var(--clr-text-secondary);
+  font-size: var(--fs-sm);
 }
 
 .admin-chat-error {
@@ -55,11 +102,29 @@
   animation: slideDown 0.3s var(--ease-out);
 }
 
+.admin-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.admin-input-group .input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--clr-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.admin-input-group:focus-within .input-icon {
+  color: var(--clr-primary);
+}
+
 .admin-chat-login-form input {
-  padding: 14px 16px;
+  width: 100%;
+  padding: 16px 16px 16px 44px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--clr-border);
-  background: var(--clr-bg-alt);
+  border: 1px solid var(--clr-border-light);
+  background: rgba(255, 255, 255, 0.5);
   color: var(--clr-text);
   font-size: var(--fs-base);
   outline: none;
@@ -68,11 +133,12 @@
 
 .admin-chat-login-form input:focus {
   border-color: var(--clr-primary);
-  box-shadow: 0 0 0 3px var(--clr-primary-glow);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4px var(--clr-primary-glow);
 }
 
-.admin-chat-login-form button {
-  padding: 14px;
+.admin-login-btn {
+  padding: 16px;
   background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-dark));
   color: white;
   border: none;
@@ -82,11 +148,15 @@
   font-size: var(--fs-base);
   transition: all var(--transition-base);
   box-shadow: 0 4px 15px var(--clr-primary-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
 }
 
-.admin-chat-login-form button:hover {
+.admin-login-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--clr-primary-glow);
+  box-shadow: 0 8px 25px var(--clr-primary-glow);
 }
 
 /* Dashboard Layout */
