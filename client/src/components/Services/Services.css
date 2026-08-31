@@ -70,17 +70,15 @@
   z-index: 2; /* Behind the rails initially, but hover z-index pulls them forward */
 }
 
-/* The Service Card (Server Blade) */
 .services__card {
   position: relative;
   cursor: default;
   display: flex;
   flex-direction: column; /* Changed from row to column for top panel */
-  background: #0a0a10;
-  border: 1px solid #222;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
   border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  will-change: transform, opacity;
+  box-shadow: var(--shadow-sm);
   transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
 }
 
@@ -105,8 +103,8 @@
   width: 100%;
   height: 48px;
   flex-shrink: 0;
-  background: linear-gradient(90deg, #1a1a24, #0f0f15);
-  border-bottom: 1px solid #000;
+  background: var(--clr-surface-light);
+  border-bottom: 1px solid var(--clr-border);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -171,11 +169,21 @@
 }
 
 .led {
+  position: relative;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #111;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.led::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: opacity;
 }
 
 /* Always on power */
@@ -185,23 +193,27 @@
 }
 
 /* Network activity */
-.led--net {
-  animation: blinkNet 0.4s infinite alternate;
+.led--net::after {
+  background: #06B6D4;
+  box-shadow: 0 0 10px #06B6D4;
+  animation: blinkOp 0.4s infinite alternate;
 }
 
 /* Disk read/write */
-.led--disk {
-  animation: blinkDisk 1.2s infinite;
+.led--disk::after {
+  background: #F59E0B;
+  box-shadow: 0 0 10px #F59E0B;
+  animation: blinkOpDisk 1.2s infinite;
 }
 
-@keyframes blinkNet {
-  0% { background: #06B6D4; box-shadow: 0 0 10px #06B6D4; }
-  100% { background: #111; box-shadow: inset 0 1px 3px rgba(0,0,0,0.8); }
+@keyframes blinkOp {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-@keyframes blinkDisk {
-  0%, 20%, 40%, 100% { background: #111; box-shadow: inset 0 1px 3px rgba(0,0,0,0.8); }
-  10%, 30%, 50% { background: #F59E0B; box-shadow: 0 0 10px #F59E0B; }
+@keyframes blinkOpDisk {
+  0%, 20%, 40%, 100% { opacity: 0; }
+  10%, 30%, 50% { opacity: 1; }
 }
 
 /* Ports */
@@ -258,7 +270,7 @@
   flex-direction: column;
   position: relative;
   z-index: 2;
-  background: radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.4) 0%, rgba(10, 10, 16, 0.9) 100%);
+  background: var(--glass-bg);
   overflow: hidden;
 }
 
@@ -272,7 +284,12 @@
   opacity: 0.4;
   z-index: -1;
   animation: streamDown 4s linear infinite;
+  animation-play-state: paused;
   box-shadow: 0 0 10px var(--clr-primary);
+}
+
+.services__card:hover .data-stream {
+  animation-play-state: running;
 }
 
 .data-stream-1 {
@@ -307,7 +324,7 @@
 }
 
 .services__card-title {
-  color: #f8fafc;
+  color: var(--clr-text);
   font-size: var(--fs-lg);
   font-weight: 700;
   margin-bottom: var(--space-xs);
@@ -346,10 +363,10 @@
   position: absolute;
   bottom: -50%;
   right: -20%;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  filter: blur(80px);
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--theme-color) 40%, transparent) 0%, transparent 70%) !important;
   opacity: 0;
   transition: opacity 0.5s;
   pointer-events: none;
@@ -398,10 +415,10 @@
 .slot-interior {
   position: absolute;
   inset: 0;
-  background: #020204;
+  background: var(--clr-bg-alt);
   border-radius: 6px;
-  border: 1px solid #111;
-  box-shadow: inset 0 20px 50px rgba(0,0,0,0.9);
+  border: 1px solid var(--clr-border);
+  box-shadow: inset 0 10px 30px rgba(0,0,0,0.05);
   z-index: 0;
 }
 
@@ -421,8 +438,8 @@
   position: relative;
   width: 100%;
   flex-grow: 1;
-  background: rgba(10, 10, 16, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -451,7 +468,7 @@
   transform: rotateX(90deg); /* Folds exactly 90 degrees backwards to form the top face */
   display: flex;
   flex-direction: column;
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9), 0 -5px 20px color-mix(in srgb, var(--theme-color) 20%, transparent);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.05), 0 -5px 20px color-mix(in srgb, var(--theme-color) 20%, transparent);
   overflow: hidden;
 }
 
@@ -479,7 +496,6 @@
   stroke-dashoffset: 1000;
   animation: traceDraw 3s infinite linear;
   stroke: var(--theme-color);
-  filter: drop-shadow(0 0 6px var(--theme-color));
   opacity: 0.8;
 }
 
@@ -524,12 +540,11 @@
 
 .drawer-details .detailed-info {
   font-family: monospace;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(8px);
+  background: var(--clr-bg-alt);
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid color-mix(in srgb, var(--theme-color) 30%, transparent);
-  color: #fff;
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text);
   font-size: 0.95rem;
   line-height: 1.6;
   box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 4px 15px rgba(0,0,0,0.5);
@@ -540,12 +555,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
+  background: var(--clr-bg-alt);
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .drawer-sidebar .stat {
@@ -566,10 +580,10 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: rgba(0,0,0,0.4);
+  background: var(--clr-bg-alt);
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid var(--clr-border);
 }
 
 .stack-label {
@@ -586,9 +600,9 @@
 }
 
 .tech-badge {
-  background: color-mix(in srgb, var(--theme-color) 15%, transparent);
-  border: 1px solid color-mix(in srgb, var(--theme-color) 40%, transparent);
-  color: #fff;
+  background: var(--clr-primary-glow);
+  border: 1px solid var(--clr-primary);
+  color: var(--clr-text);
   padding: 4px 10px;
   border-radius: 4px;
   font-family: monospace;

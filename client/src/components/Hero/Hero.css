@@ -7,6 +7,7 @@
   overflow: hidden;
   overflow: clip;
   padding: calc(var(--nav-height) + 2rem) 0 4rem;
+  color: var(--clr-text);
 }
 
 /* Background Effects */
@@ -60,10 +61,7 @@
 
 /* Floating geometric shapes */
 .hero__shape {
-  position: absolute;
-  border: 1px solid rgba(168, 85, 247, 0.15);
-  animation: shapeFloat 20s ease-in-out infinite;
-  pointer-events: none;
+  display: none;
 }
 
 .hero__shape--1 {
@@ -74,7 +72,7 @@
   border-radius: var(--radius-lg);
   transform: rotate(45deg);
   animation-delay: 0s;
-  border-color: rgba(168, 85, 247, 0.2);
+  border-color: var(--clr-primary-glow);
 }
 
 .hero__shape--2 {
@@ -84,7 +82,7 @@
   left: 10%;
   border-radius: 50%;
   animation-delay: -7s;
-  border-color: rgba(6, 182, 212, 0.2);
+  border-color: var(--clr-secondary-glow);
 }
 
 .hero__shape--3 {
@@ -95,7 +93,7 @@
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   animation-delay: -14s;
   border: none;
-  background: rgba(168, 85, 247, 0.05);
+  background: var(--clr-border-light);
 }
 
 @keyframes shapeFloat {
@@ -106,14 +104,7 @@
 }
 
 .hero__grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(168, 85, 247, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(168, 85, 247, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  display: none;
 }
 
 /* Content & Split Layout */
@@ -166,10 +157,13 @@
   line-height: 1.25;
   margin-bottom: var(--space-lg);
   letter-spacing: -0.03em;
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
 }
 
 .hero__title-word {
   display: inline-block;
+  color: #FFFFFF;
 }
 
 .hero__typed-wrapper {
@@ -181,6 +175,9 @@
 .hero__typed {
   font-size: inherit;
   white-space: nowrap;
+  color: #38BDF8;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+  -webkit-text-fill-color: #38BDF8;
 }
 
 .hero__cursor {
@@ -199,6 +196,8 @@
   font-size: var(--fs-base);
   margin: 0 0 var(--space-xl) 0;
   line-height: 1.7;
+  color: #F1F5F9;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
 
 /* Actions */
@@ -244,7 +243,7 @@
   font-family: var(--font-heading);
   font-size: var(--fs-xl);
   font-weight: 800;
-  background: linear-gradient(135deg, var(--clr-text), var(--clr-primary));
+  background: linear-gradient(135deg, #0F172A, #2563EB);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

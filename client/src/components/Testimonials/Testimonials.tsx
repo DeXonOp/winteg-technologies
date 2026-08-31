@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import ReviewModal from './ReviewModal'
 import './Testimonials.css'
 
 interface Testimonial {
@@ -84,19 +85,49 @@ const slideVariants = {
 }
 
 export default function Testimonials() {
+  const [allTestimonials, setAllTestimonials] = useState<Testimonial[]>(testimonials)
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+
+  const fetchReviews = async () => {
+    try {
+      const apiUrl = import.meta.env.PROD
+        ? 'https://api.wintegtechnologies.com/api/reviews'
+        : '/api/reviews'
+      const res = await fetch(apiUrl)
+      if (!res.ok) return
+      const data = await res.json()
+      const colors = ['#A855F7', '#10B981', '#F59E0B', '#8B5CF6', '#06B6D4']
+      const formatted = data.map((d: any, i: number) => ({
+        name: d.name,
+        role: 'Verified Client',
+        company: '',
+        text: d.text,
+        rating: d.rating,
+        initials: d.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase() || 'C',
+        color: colors[i % colors.length]
+      }))
+      setAllTestimonials([...testimonials, ...formatted])
+    } catch (err) {
+      console.error('Failed to fetch reviews', err)
+    }
+  }
+
+  useEffect(() => {
+    fetchReviews()
+  }, [])
 
   const next = useCallback(() => {
     setDirection(1)
-    setCurrent((prev) => (prev + 1) % testimonials.length)
-  }, [])
+    setCurrent((prev) => (prev + 1) % allTestimonials.length)
+  }, [allTestimonials.length])
 
   const prev = useCallback(() => {
     setDirection(-1)
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }, [])
+    setCurrent((prev) => (prev - 1 + allTestimonials.length) % allTestimonials.length)
+  }, [allTestimonials.length])
 
   const goTo = useCallback((index: number) => {
     setDirection(index > current ? 1 : -1)
@@ -109,7 +140,7 @@ export default function Testimonials() {
     return () => clearInterval(timer)
   }, [isAutoPlaying, next])
 
-  const t = testimonials[current]
+  const t = allTestimonials[current] || allTestimonials[0]
 
   return (
     <section className="testimonials section" id="testimonials">
@@ -182,7 +213,7 @@ export default function Testimonials() {
             </button>
 
             <div className="testimonials__dots">
-              {testimonials.map((_, i) => (
+              {allTestimonials.map((_, i) => (
                 <button
                   key={i}
                   className={`testimonials__dot ${current === i ? 'testimonials__dot--active' : ''}`}
@@ -196,8 +227,21 @@ export default function Testimonials() {
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </button>
           </div>
+          
+          {/* Leave a Review Button */}
+          <div className="testimonials__action">
+            <button className="btn btn-outline" onClick={() => setIsReviewModalOpen(true)}>
+              Leave a Review
+            </button>
+          </div>
         </div>
       </div>
+
+      <ReviewModal 
+        isOpen={isReviewModalOpen} 
+        onClose={() => setIsReviewModalOpen(false)} 
+        onSuccess={fetchReviews} 
+      />
     </section>
   )
 }

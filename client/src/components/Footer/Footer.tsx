@@ -5,7 +5,7 @@ const quickLinks = [
   { label: 'Winteg Technologies Home', href: '#home' },
   { label: 'About Winteg Technologies', href: '#about' },
   { label: 'Winteg Services', href: '#services' },
-  { label: 'Winteg Portfolio', href: '#portfolio' },
+  { label: 'Winteg Process', href: '#portfolio' },
   { label: 'Contact Winteg Technologies', href: '#contact' },
 ]
 

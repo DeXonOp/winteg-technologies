@@ -1,21 +1,21 @@
 .live-visitors {
   position: fixed;
-  bottom: 6rem;
-  left: 1.5rem;
+  bottom: 1.5rem;
+  right: 6rem;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: rgba(10, 10, 26, 0.8);
+  background: var(--clr-surface);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(168, 85, 247, 0.12);
+  border: 1px solid var(--clr-border);
   border-radius: 9999px;
   font-size: 0.75rem;
   color: var(--clr-text-secondary);
   z-index: 999;
   cursor: default;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .live-visitors__dot {
@@ -40,8 +40,8 @@
 
 @media (max-width: 768px) {
   .live-visitors {
-    bottom: 5rem;
-    left: 1rem;
+    bottom: 1rem;
+    right: 5rem;
     font-size: 0.7rem;
     padding: 6px 12px;
   }

@@ -7,5 +7,5 @@
   background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary), var(--clr-accent-rose));
   transform-origin: 0%;
   z-index: 10000;
-  box-shadow: 0 0 10px var(--clr-primary-glow), 0 0 30px var(--clr-primary-glow);
+  pointer-events: none;
 }

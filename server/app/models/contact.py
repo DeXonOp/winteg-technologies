@@ -8,8 +8,8 @@ from typing import Optional
 
 # ── Contact Form ────────────────────────────────────────────
 class ContactRequest(BaseModel):
-    name: str = Field(..., min_length=2, max_length=100, examples=["John Doe"])
-    email: str = Field(..., min_length=5, max_length=150, examples=["john@example.com"])
+    name: str = Field(..., min_length=2, max_length=100, examples=["Name"])
+    email: str = Field(..., min_length=5, max_length=150, examples=["name@example.com"])
     phone: Optional[str] = Field(None, max_length=20, examples=["+91 98765 43210"])
     service: str = Field(..., examples=["web"])
     budget: Optional[str] = Field(None, examples=["10k-25k"])
@@ -24,7 +24,7 @@ class ContactResponse(BaseModel):
 
 # ── Newsletter ──────────────────────────────────────────────
 class NewsletterRequest(BaseModel):
-    email: str = Field(..., min_length=5, max_length=150, examples=["john@example.com"])
+    email: str = Field(..., min_length=5, max_length=150, examples=["name@example.com"])
 
 
 class NewsletterResponse(BaseModel):

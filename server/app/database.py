@@ -16,6 +16,17 @@ def init_db():
             updated_at TEXT
         )
     ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS reviews (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT,
+            text TEXT,
+            rating INTEGER,
+            is_approved BOOLEAN DEFAULT 1,
+            created_at TEXT
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -62,3 +73,41 @@ def get_all_chat_logs():
             "updated_at": row[2]
         })
     return logs
+
+def save_review(name: str, email: str, text: str, rating: int):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    created_at = datetime.now(timezone.utc).isoformat()
+    # Default is_approved to 1 (True) so it shows up immediately
+    c.execute('''
+        INSERT INTO reviews (name, email, text, rating, is_approved, created_at)
+        VALUES (?, ?, ?, ?, 1, ?)
+    ''', (name, email, text, rating, created_at))
+    review_id = c.lastrowid
+    conn.commit()
+    conn.close()
+    return review_id
+
+def get_approved_reviews():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    # Only fetch name, text, and rating for public display (skip email)
+    c.execute('''
+        SELECT id, name, text, rating, created_at 
+        FROM reviews 
+        WHERE is_approved = 1 
+        ORDER BY id DESC
+    ''')
+    rows = c.fetchall()
+    conn.close()
+    
+    reviews = []
+    for row in rows:
+        reviews.append({
+            "id": row[0],
+            "name": row[1],
+            "text": row[2],
+            "rating": row[3],
+            "created_at": row[4]
+        })
+    return reviews

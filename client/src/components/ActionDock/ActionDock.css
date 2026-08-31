@@ -27,20 +27,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(10, 10, 26, 0.9);
+  background: var(--clr-surface);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(168, 85, 247, 0.15);
-  color: var(--dock-color, var(--clr-text));
+  border: 1px solid var(--clr-border);
+  color: var(--dock-color, var(--clr-primary));
   cursor: pointer;
   transition: all 0.3s var(--ease-out);
   text-decoration: none;
+  box-shadow: var(--shadow-md);
 }
 
 .action-dock__item:hover {
   transform: scale(1.2);
   border-color: var(--dock-color);
-  box-shadow: 0 0 20px color-mix(in srgb, var(--dock-color) 30%, transparent);
-  background: rgba(10, 10, 26, 1);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--dock-color) 30%, transparent);
+  background: var(--clr-surface-light);
 }
 
 .action-dock__tooltip {
@@ -52,8 +53,8 @@
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--clr-text);
-  background: rgba(10, 10, 26, 0.95);
-  border: 1px solid rgba(168, 85, 247, 0.15);
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
   border-radius: 6px;
   white-space: nowrap;
   pointer-events: none;

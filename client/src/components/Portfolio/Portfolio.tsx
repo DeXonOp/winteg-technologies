@@ -13,43 +13,38 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: 'TempGenPro',
-    description: 'Instant temp emails and temporary email generators for privacy. Secure, fast, and anonymous.',
-    tags: ['React', 'Node.js', 'Privacy'],
+    title: 'Discovery & Architecture',
+    description: 'We begin by thoroughly analyzing your business requirements, existing infrastructure, and data flow. We then design a scalable cloud architecture and create detailed engineering blueprints.',
+    tags: ['System Design', 'Cloud Architecture', 'Requirements'],
     color: '#A855F7',
-    link: 'https://tempgenpro.com/',
     number: '01',
   },
   {
-    title: 'Madhyamgram Rabindra Academy',
-    description: 'Official portal for Madhyamgram Rabindra Academy. Manage attendance, homework, and results with our high-performance school management system.',
-    tags: ['React', 'School Management'],
+    title: 'Prototyping & AI Modeling',
+    description: 'Before committing to full-scale development, we build functional prototypes. For AI projects, this involves initial model selection, data sanitization, and proof-of-concept training.',
+    tags: ['Rapid Prototyping', 'Data Engineering', 'Feasibility'],
     color: '#10B981',
-    link: 'https://madhyamgramrabindraacademy.in/',
     number: '02',
   },
   {
-    title: 'Family Bookstore',
-    description: 'Discover professional book collections at Family Bookstore. Wide range of categories including Manga, Fiction, and more.',
-    tags: ['E-Commerce', 'Books', 'React'],
+    title: 'Core System Engineering',
+    description: 'Our senior engineers write clean, highly optimized code. We build your telemetrics pipelines, train computer vision models, or develop your enterprise ERP system utilizing strict CI/CD pipelines.',
+    tags: ['Full-stack Dev', 'IoT Integration', 'Machine Learning'],
     color: '#06B6D4',
-    link: 'https://familybookstore.in/',
     number: '03',
   },
   {
-    title: '99Bookstore',
-    description: 'Online bookstore with a wide selection of books, fast shipping, and secure checkout. Built on a modern commerce platform.',
-    tags: ['E-Commerce', 'Shopify', 'Store'],
+    title: 'Security & Stress Testing',
+    description: 'Enterprise systems demand extreme reliability. We perform rigorous penetration testing, load simulation, and edge-case QA to ensure your infrastructure handles massive traffic spikes securely.',
+    tags: ['Pen-testing', 'Load Balancing', 'QA Automation'],
     color: '#F43F5E',
-    link: 'https://99bookstores.com/',
     number: '04',
   },
   {
-    title: 'EduVibe',
-    description: 'A premium education platform providing interactive learning experiences and comprehensive educational resources.',
-    tags: ['Education', 'React', 'Firebase'],
+    title: 'Deployment & Scale',
+    description: 'We containerize applications using Docker/Kubernetes and deploy them to highly scalable cloud clusters. Post-launch, we provide continuous monitoring and 99.99% SLA-backed maintenance.',
+    tags: ['Kubernetes', 'Cloud Deployment', '24/7 Monitoring'],
     color: '#0EA5E9',
-    link: 'https://eduvibe-b1cc9.web.app/',
     number: '05',
   },
 ]
@@ -78,9 +73,9 @@ export default function Portfolio() {
         <div className="notebook-cover front-cover">
           <div className="cover-design">
             <h2>Winteg</h2>
-            <h1>Portfolio</h1>
+            <h1>Engineering</h1>
             <div className="cover-line"></div>
-            <p>A collection of our finest works</p>
+            <p>Our Development Methodology</p>
           </div>
         </div>
       )
@@ -145,12 +140,12 @@ export default function Portfolio() {
             }, 800)
           }}
         >
-          <span className="section-label">Our Work</span>
+          <span className="section-label">Methodology</span>
           <h2 className="section-title">
-            Featured <span className="gradient-text">Projects</span>
+            How We <span className="gradient-text">Work</span>
           </h2>
           <p className="section-subtitle">
-            Flip through our digital notebook to explore our recent work.
+            Flip through our digital playbook to explore our engineering process.
           </p>
         </motion.div>
 

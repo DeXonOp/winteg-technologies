@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import CustomSelect from '../CustomSelect/CustomSelect'
 import CountUp from '../CountUp/CountUp'
+import BackgroundVideo from './BackgroundVideo'
 import './Hero.css'
 
 const phrases = [
@@ -132,6 +133,8 @@ export default function Hero() {
 
   return (
     <section className="hero" id="home">
+      <BackgroundVideo />
+      
       {/* Animated background */}
       <div className="hero__bg">
         <div className="hero__gradient-orb hero__gradient-orb--1"></div>
@@ -231,7 +234,7 @@ export default function Hero() {
                   }
                 }}
               >
-                View Our Works
+                Our Process
               </a>
             </motion.div>
 

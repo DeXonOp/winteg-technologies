@@ -100,7 +100,7 @@ function App() {
       <Chatbot isOpen={chatOpen} onToggle={setChatOpen} />
 
       {/* macOS-style floating action dock */}
-      <ActionDock onOpenChat={() => setChatOpen(true)} />
+      <ActionDock />
 
       {legalModal === 'privacy' && <PrivacyPolicy onClose={() => setLegalModal(null)} />}
       {legalModal === 'terms' && <TermsOfService onClose={() => setLegalModal(null)} />}

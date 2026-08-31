@@ -55,9 +55,18 @@ server.listen(PORT, async () => {
     const page = await browser.newPage()
     await page.setViewport({ width: 1920, height: 1080 })
 
+    await page.setRequestInterception(true)
+    page.on('request', (req) => {
+      if (req.resourceType() === 'media') {
+        req.abort()
+      } else {
+        req.continue()
+      }
+    })
+
     // Increase timeout for SPA rendering
     await page.goto(`http://localhost:${PORT}/`, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'domcontentloaded',
       timeout: 30000,
     })
 

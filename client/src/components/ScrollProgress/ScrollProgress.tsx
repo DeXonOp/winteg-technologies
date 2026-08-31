@@ -10,6 +10,12 @@ export default function ScrollProgress() {
   })
 
   return (
-    <motion.div className="scroll-progress" style={{ scaleX }} />
+    <motion.div
+      className="scroll-progress"
+      style={{
+        scaleX,
+        opacity: scrollYProgress,
+      }}
+    />
   )
 }
