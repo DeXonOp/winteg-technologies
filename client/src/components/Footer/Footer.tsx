@@ -10,18 +10,19 @@ const quickLinks = [
 ];
 
 const serviceLinks = [
-  "Telemetrics & IoT",
-  "AI Solutions",
-  "GPS & Tracking",
-  "AI Camera & Vision",
-  "ERP & CRM",
-  "Healthcare Systems",
-  "Fintech & Payments",
-  "Website Development",
-  "Software Development",
-  "Social Media",
-  "Web Applications",
-  "Mobile Apps",
+  { label: "Telematics & IoT Monitoring", href: "/services/telematics/" },
+  { label: "IoT Development", href: "/services/iot/" },
+  { label: "GPS Tracking Solutions", href: "/services/gps-tracking/" },
+  { label: "AI Integration Services", href: "/services/ai-integration/" },
+  { label: "AI Camera & Computer Vision", href: "/services/computer-vision/" },
+  { label: "ERP & CRM Systems", href: "/services/erp-crm/" },
+  { label: "Healthcare Systems", href: "/services/healthcare/" },
+  { label: "Fintech & Payments", href: "/services/fintech/" },
+  { label: "Website Development", href: "/services/website-development/" },
+  { label: "Software Development", href: "/services/software-development/" },
+  { label: "Social Media Management", href: "/services/social-media/" },
+  { label: "Web Applications", href: "/services/web-applications/" },
+  { label: "Mobile Apps", href: "/services/mobile-app-development/" },
 ];
 
 interface FooterProps {
@@ -142,9 +143,9 @@ export default function Footer({ onOpenLegal }: FooterProps) {
             <h4 className="footer__col-title">Services</h4>
             <ul className="footer__links">
               {serviceLinks.map((s) => (
-                <li key={s}>
-                  <a href="#services" className="footer__link">
-                    {s}
+                <li key={s.href}>
+                  <a href={s.href} className="footer__link">
+                    {s.label}
                   </a>
                 </li>
               ))}
