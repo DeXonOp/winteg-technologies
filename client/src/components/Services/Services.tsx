@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, type Variants } from 'framer-motion'
 import {
   Code2, Monitor, Cpu, Brain, Smartphone, Share2,
@@ -183,13 +184,16 @@ export default function Services() {
   useEffect(() => {
     if (selectedService) {
       document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
     
     // Cleanup on unmount
     return () => {
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
   }, [selectedService])
 
@@ -284,7 +288,7 @@ export default function Services() {
       </div>
 
       {/* Detailed Service Modal / Drawer */}
-      {selectedService && (
+      {selectedService && createPortal(
         <div className="service-modal-overlay" onClick={() => setSelectedService(null)}>
           <motion.div
             className="service-modal-content glass-card"
@@ -350,7 +354,8 @@ export default function Services() {
               </button>
             </div>
           </motion.div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   )

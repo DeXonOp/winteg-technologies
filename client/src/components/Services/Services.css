@@ -242,8 +242,15 @@
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.15),
     0 0 40px color-mix(in srgb, var(--theme-color, #7c3aed) 30%, transparent);
-  max-height: 90vh;
+  max-height: calc(100svh - 48px);
   overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.service-modal-content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .service-modal-close {
@@ -383,7 +390,11 @@
   .modal-grid {
     grid-template-columns: 1fr;
   }
+  .service-modal-overlay {
+    padding: 16px;
+  }
   .service-modal-content {
     padding: 24px;
+    max-height: calc(100svh - 32px);
   }
 }
