@@ -37,19 +37,25 @@ def send_contact_email(data) -> bool:
 
             # 1. Notification to you (with all form details)
             notify = MIMEMultipart()
-            notify["From"] = "Winteg Technologies <wintegtechnologies@gmail.com>"
-            notify["To"] = "wintegtechnologies@gmail.com"
+            notify["From"] = "Winteg Technologies <contact@wintegtechnologies.com>"
+            notify["To"] = "contact@wintegtechnologies.com"
             notify["Reply-To"] = data.email
             notify["Subject"] = f"New Contact: {data.name} ({data.email}) — {data.service}"
             notify.attach(MIMEText(f"""
 NEW CONTACT FORM SUBMISSION
 Reply-To is set to customer — hit Reply then DELETE QUOTED TEXT below your message before sending
 
-Name:    {data.name}
-Email:   {data.email}
-Phone:   {data.phone or 'Not provided'}
-Service: {data.service}
-Budget:  {data.budget or 'Not specified'}
+Name:     {data.name}
+Email:    {data.email}
+Company:  {data.company or 'Not provided'}
+Phone:    {data.phone or 'Not provided'}
+Website:  {data.website or 'Not provided'}
+Service:  {data.service}
+Type:     {data.project_type or 'Not specified'}
+Tech:     {', '.join(data.technologies) if data.technologies else 'None'}
+Timeline: {data.timeline}
+Budget:   {data.budget or 'Not specified'}
+Referral: {data.referral or 'Not specified'}
 
 Message:
 {data.message}
@@ -58,7 +64,7 @@ Message:
 
             # 2. Clean auto-reply to customer (no quoted submission details)
             reply = MIMEMultipart()
-            reply["From"] = "Winteg Technologies <wintegtechnologies@gmail.com>"
+            reply["From"] = "Winteg Technologies <contact@wintegtechnologies.com>"
             reply["To"] = data.email
             reply["Subject"] = f"Thank you for contacting Winteg Technologies, {data.name}!"
             reply.attach(MIMEText(f"""

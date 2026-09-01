@@ -1,150 +1,40 @@
-import { motion } from "framer-motion";
-import { useEffect, useState, type FormEvent } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import CountUp from "../CountUp/CountUp";
-import CustomSelect from "../CustomSelect/CustomSelect";
 import BackgroundVideo from "./BackgroundVideo";
 import "./Hero.css";
 
 const phrases = [
   "Telemetrics & IoT",
-  "AI-Powered Solutions",
   "GPS Integration & Tracking",
-  "IoT Management Systems",
+  "AI-Powered Solutions",
   "AI Cameras & Computer Vision",
   "ERP & CRM Architectures",
+  "Data Analytics & Insights",
   "Healthcare IT Solutions",
-  "Fintech & Payment Systems",
-  "Winteg Technologies",
-];
-
-const allServices = [
-  { value: "telemetrics", label: "Telemetrics & IoT Monitoring" },
-  { value: "ai", label: "AI-Powered Solutions" },
-  { value: "gps", label: "GPS Integration & Tracking" },
-  { value: "aicamera", label: "AI Camera & Computer Vision" },
-  { value: "erp", label: "ERP & CRM Systems" },
-  { value: "healthcare", label: "Healthcare Management Systems" },
-  { value: "fintech", label: "Fintech & Payment Solutions" },
-  { value: "software", label: "Software Development" },
-  { value: "social", label: "Social Media Management" },
-  { value: "webapp", label: "Web Applications" },
-  { value: "mobile", label: "Mobile App Development" },
-  { value: "web", label: "Website Development" },
-  { value: "other", label: "Other" },
+  "Healthcare Management Systems",
+  "Fintech & Payment Solutions",
+  "Blockchain & Web3 Architectures",
 ];
 
 const titleWords = ["We", "Build", "The", "Future"];
 
 export default function Hero() {
   const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [displayText, setDisplayText] = useState(phrases[0]);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    budget: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const SLIDE_DURATION = 6000; // 6 seconds per slide
 
+  // Master Timer for syncing Video and Text
   useEffect(() => {
-    const phrase = phrases[currentPhrase];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (!isDeleting) {
-      if (displayText.length < phrase.length) {
-        timeout = setTimeout(() => {
-          setDisplayText(phrase.substring(0, displayText.length + 1));
-        }, 80);
-      } else {
-        timeout = setTimeout(() => setIsDeleting(true), 2000);
-      }
-    } else {
-      if (displayText.length > 0) {
-        timeout = setTimeout(() => {
-          setDisplayText(phrase.substring(0, displayText.length - 1));
-        }, 40);
-      } else {
-        setIsDeleting(false);
-        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentPhrase]);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSubmitted(false);
-
-    try {
-      const apiUrl = import.meta.env.PROD
-        ? "https://api.wintegtechnologies.com/api/contact"
-        : "/api/contact";
-
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        let errorMessage = "Failed to send message";
-        if (result.detail) {
-          if (Array.isArray(result.detail)) {
-            errorMessage = result.detail
-              .map((err: any) => {
-                const field = err.loc && err.loc.length > 1 ? err.loc[1] : "";
-                if (field === "message") return "Message too short to send";
-                return field
-                  ? `${field.charAt(0).toUpperCase() + field.slice(1)}: ${err.msg}`
-                  : err.msg;
-              })
-              .join(", ");
-          } else if (typeof result.detail === "string") {
-            errorMessage = result.detail;
-          } else {
-            errorMessage = JSON.stringify(result.detail);
-          }
-        }
-        throw new Error(errorMessage);
-      }
-
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        service: "",
-        budget: "",
-        message: "",
-      });
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch (err: any) {
-      console.error("Error submitting contact form:", err);
-      setError(
-        err.message || "An unexpected error occurred. Please try again.",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    const timer = setInterval(() => {
+      setCurrentPhrase((prev) => (prev + 1) % phrases.length);
+    }, SLIDE_DURATION);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="hero" id="home">
-      <BackgroundVideo />
+      <BackgroundVideo currentIndex={currentPhrase} />
 
       {/* Animated background */}
       <div className="hero__bg">
@@ -196,8 +86,42 @@ export default function Hero() {
               ))}
               <br />
               <span className="hero__typed-wrapper">
-                <span className="gradient-text hero__typed">{displayText}</span>
-                <span className="hero__cursor">|</span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={currentPhrase}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={{
+                      hidden: { opacity: 1 },
+                      visible: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.06 },
+                      },
+                      exit: {
+                        opacity: 0,
+                        filter: "blur(4px)",
+                        y: -10,
+                        transition: { duration: 0.3 },
+                      },
+                    }}
+                    className="gradient-text hero__typed"
+                    style={{ display: "inline-block" }}
+                  >
+                    {phrases[currentPhrase].split("").map((char, index) => (
+                      <motion.span
+                        key={index}
+                        variants={{
+                          hidden: { opacity: 0, display: "none" },
+                          visible: { opacity: 1, display: "inline-block" },
+                        }}
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </motion.span>
+                    ))}
+                    <span className="hero__cursor">|</span>
+                  </motion.span>
+                </AnimatePresence>
               </span>
             </h1>
 
@@ -221,11 +145,11 @@ export default function Hero() {
               transition={{ delay: 0.8, duration: 0.6 }}
             >
               <a
-                href="#hero-contact"
+                href="#contact"
                 className="btn btn-primary btn--lg hero__quote-btn"
                 onClick={(e) => {
                   e.preventDefault();
-                  const el = document.getElementById("hero-contact");
+                  const el = document.getElementById("contact");
                   if (el) {
                     const rect = el.getBoundingClientRect();
                     const scrollTop =
@@ -235,7 +159,7 @@ export default function Hero() {
                   }
                 }}
               >
-                Get a Quote
+                Contact Us
                 <svg
                   width="16"
                   height="16"
@@ -295,195 +219,6 @@ export default function Hero() {
                 </motion.div>
               ))}
             </motion.div>
-          </motion.div>
-
-          {/* Right Column: Contact/Quote Form */}
-          <motion.div
-            className="hero__right-col"
-            id="hero-contact"
-            initial={{ opacity: 0, scale: 0.9, y: 40 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.4,
-              type: "spring",
-              stiffness: 80,
-            }}
-          >
-            <div className="contact__form-wrapper">
-              <form
-                className="contact__form glass-card"
-                onSubmit={handleSubmit}
-              >
-                <h3 className="hero__form-title">Get a Free Quote</h3>
-                <p className="hero__form-subtitle">
-                  Let's discuss your project today.
-                </p>
-
-                {submitted && (
-                  <div className="contact__success">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="var(--clr-accent-green)"
-                      strokeWidth="2.5"
-                    >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                      <polyline points="22 4 12 14.01 9 11.01" />
-                    </svg>
-                    <span>Message sent! We'll contact you soon.</span>
-                  </div>
-                )}
-
-                {error && (
-                  <div className="contact__error">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="12" />
-                      <line x1="12" y1="16" x2="12.01" y2="16" />
-                    </svg>
-                    <span>{error}</span>
-                  </div>
-                )}
-
-                <div className="contact__form-row">
-                  <div className="contact__field">
-                    <label htmlFor="hero-name">Full Name</label>
-                    <input
-                      type="text"
-                      id="hero-name"
-                      placeholder="Your name"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
-                  <div className="contact__field">
-                    <label htmlFor="hero-email">Email</label>
-                    <input
-                      type="email"
-                      id="hero-email"
-                      placeholder="abc@example.com"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="contact__form-row">
-                  <div className="contact__field">
-                    <label htmlFor="hero-phone">Phone (Optional)</label>
-                    <input
-                      type="tel"
-                      id="hero-phone"
-                      placeholder="Phone number"
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="contact__field">
-                    <label htmlFor="hero-service">Service Needed</label>
-                    <CustomSelect
-                      id="hero-service"
-                      value={formData.service}
-                      onChange={(val) =>
-                        setFormData({ ...formData, service: val })
-                      }
-                      placeholder="Select service"
-                      required
-                      options={allServices}
-                    />
-                  </div>
-                </div>
-
-                <div className="contact__field">
-                  <label htmlFor="hero-budget">Budget Range</label>
-                  <CustomSelect
-                    id="hero-budget"
-                    value={formData.budget}
-                    onChange={(val) =>
-                      setFormData({ ...formData, budget: val })
-                    }
-                    placeholder="Select budget range"
-                    options={[
-                      { value: "20k-50k", label: "₹20,000 — ₹50,000" },
-                      {
-                        value: "50k-1.5L",
-                        label: "₹50,000 — ₹1,50,000 (1.5 Lakhs)",
-                      },
-                      {
-                        value: "1.5L-3L",
-                        label: "₹1,50,000 — ₹3,00,000 (3 Lakhs)",
-                      },
-                      {
-                        value: "3L-7L",
-                        label: "₹3,00,000 — ₹7,00,000 (7 Lakhs)",
-                      },
-                      {
-                        value: "7L-10L",
-                        label: "₹7,00,000 — ₹10,00,000 (10 Lakhs)",
-                      },
-                      { value: "10L+", label: "₹10,00,000+ (Above 10 Lakhs)" },
-                    ]}
-                  />
-                </div>
-
-                <div className="contact__field">
-                  <label htmlFor="hero-message">Project Details</label>
-                  <textarea
-                    id="hero-message"
-                    rows={3}
-                    placeholder="Brief details about your project..."
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    required
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary contact__submit"
-                  disabled={loading}
-                >
-                  {loading ? "Sending..." : "Send Message"}
-                  {!loading && (
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="22" y1="2" x2="11" y2="13" />
-                      <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                    </svg>
-                  )}
-                </button>
-              </form>
-            </div>
           </motion.div>
         </div>
       </div>

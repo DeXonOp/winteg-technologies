@@ -166,10 +166,10 @@ export default function About() {
             <p className="about__text">
               Winteg Technologies is a passionate team of developers, designers,
               and strategists dedicated to helping businesses thrive in the
-              digital world. Founded by Aritra Dutta & Ayon Pal, Winteg
-              (wintegtechnologies.com) combines cutting-edge technology with
-              creative thinking to deliver web development, software
-              engineering, and AI solutions that make an impact.
+              digital world. Founded by Aritra Dutta & Ayon Pal, Winteg combines
+              cutting-edge technology with creative thinking to deliver web
+              development, software engineering, and AI solutions that make an
+              impact.
             </p>
             <p className="about__text">
               From sleek websites and robust software to intelligent AI

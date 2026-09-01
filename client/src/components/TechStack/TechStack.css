@@ -25,6 +25,30 @@
   overflow: hidden;
 }
 
+.techstack__category:nth-child(1) {
+  background-color: #F4F0FF;
+  border-color: #D8B4FE;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.06);
+}
+
+.techstack__category:nth-child(2) {
+  background-color: #EFF6FF;
+  border-color: #BFDBFE;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.06);
+}
+
+.techstack__category:nth-child(3) {
+  background-color: #FFF1F2;
+  border-color: #FECDD3;
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.06);
+}
+
+.techstack__category:nth-child(4) {
+  background-color: #ECFDF5;
+  border-color: #A7F3D0;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.06);
+}
+
 .techstack__category::before {
   content: '';
   position: absolute;

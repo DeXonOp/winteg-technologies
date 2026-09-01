@@ -78,13 +78,17 @@ def start_client():
     )
 
 
-def start_server():
+def start_server(is_prod=False):
     """Start the FastAPI/Uvicorn server."""
-    print(f"{YELLOW}[SERVER]{RESET} Starting FastAPI server on http://localhost:8000")
-    return subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"],
-        cwd=SERVER_DIR,
-    )
+    print(f"{YELLOW}[SERVER]{RESET} Starting FastAPI server on http://localhost:8000 (Prod: {is_prod})")
+    
+    cmd = [sys.executable, "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    if is_prod:
+        cmd.extend(["--workers", "4"])
+    else:
+        cmd.extend(["--reload"])
+        
+    return subprocess.Popen(cmd, cwd=SERVER_DIR)
 
 
 def main():
@@ -93,6 +97,7 @@ def main():
     # Parse simple flags
     only_client = "--client" in sys.argv
     only_server = "--server" in sys.argv
+    is_prod = "--prod" in sys.argv
 
     processes = []
 
@@ -104,7 +109,7 @@ def main():
 
         if not only_client:
             check_python_deps()
-            server_proc = start_server()
+            server_proc = start_server(is_prod=is_prod)
             processes.append(("SERVER", server_proc))
 
         if not processes:

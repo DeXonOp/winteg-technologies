@@ -4,7 +4,9 @@ Winteg Technologies — FastAPI Application Entry Point
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.responses import ORJSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.config import settings
@@ -22,6 +24,15 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 
+class CacheControlMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        if request.method == "GET":
+            # Cache API GET requests for 60 seconds (adjust as needed for specific endpoints)
+            response.headers["Cache-Control"] = "public, max-age=60"
+        return response
+
+
 # ── Create app ──────────────────────────────────────────────
 app = FastAPI(
     title=settings.APP_NAME,
@@ -29,10 +40,13 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
+    default_response_class=ORJSONResponse,
 )
 
-# ── Security headers middleware ─────────────────────────────
+# ── Performance & Security Middlewares ─────────────────────────────
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(CacheControlMiddleware)
 
 # ── CORS ────────────────────────────────────────────────────
 app.add_middleware(

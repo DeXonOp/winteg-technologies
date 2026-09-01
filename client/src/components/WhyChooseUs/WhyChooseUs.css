@@ -26,6 +26,36 @@
   transform-style: preserve-3d;
 }
 
+.why__card:nth-child(1) {
+  background-color: #F4F0FF;
+  border-color: #D8B4FE;
+}
+
+.why__card:nth-child(2) {
+  background-color: #ECFDF5;
+  border-color: #A7F3D0;
+}
+
+.why__card:nth-child(3) {
+  background-color: #FFFBEB;
+  border-color: #FDE68A;
+}
+
+.why__card:nth-child(4) {
+  background-color: #ECFEFF;
+  border-color: #A5F3FC;
+}
+
+.why__card:nth-child(5) {
+  background-color: #FDF2F8;
+  border-color: #FBCFE8;
+}
+
+.why__card:nth-child(6) {
+  background-color: #EEF2FF;
+  border-color: #C7D2FE;
+}
+
 .why__card-bg-number {
   position: absolute;
   top: -8px;

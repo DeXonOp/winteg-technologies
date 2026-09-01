@@ -30,7 +30,6 @@ const services: Service[] = [
     metrics: [{ label: 'Ingestion', value: '10GB/hr' }, { label: 'Uptime', value: '99.999%' }],
     gradient: 'linear-gradient(135deg, #EAB308, #FACC15)',
     color: '#EAB308',
-    size: 'large',
   },
   {
     icon: <Brain size={28} />,
@@ -42,7 +41,6 @@ const services: Service[] = [
     metrics: [{ label: 'Inference', value: '< 200ms' }, { label: 'Accuracy', value: '98.4%' }],
     gradient: 'linear-gradient(135deg, #F59E0B, #FBBF24)',
     color: '#F59E0B',
-    size: 'large',
   },
   {
     icon: <MapPin size={28} />,
@@ -76,7 +74,6 @@ const services: Service[] = [
     metrics: [{ label: 'ACID', value: 'Strict' }, { label: 'Queries', value: '< 10ms' }],
     gradient: 'linear-gradient(135deg, #8B5CF6, #A78BFA)',
     color: '#8B5CF6',
-    size: 'large',
   },
   {
     icon: <HeartPulse size={28} />,
@@ -99,7 +96,6 @@ const services: Service[] = [
     metrics: [{ label: 'Compliance', value: 'PCI-DSS L1' }, { label: 'Data Loss', value: '0%' }],
     gradient: 'linear-gradient(135deg, #0EA5E9, #38BDF8)',
     color: '#0EA5E9',
-    size: 'large',
   },
   {
     icon: <Cpu size={28} />,
@@ -122,7 +118,6 @@ const services: Service[] = [
     metrics: [{ label: 'ROAS', value: '3.4x Avg' }, { label: 'Data Sync', value: 'Real-time' }],
     gradient: 'linear-gradient(135deg, #EC4899, #F472B6)',
     color: '#EC4899',
-    size: 'large',
   },
   {
     icon: <Monitor size={28} />,
@@ -134,7 +129,6 @@ const services: Service[] = [
     metrics: [{ label: 'Throughput', value: '10k req/s' }, { label: 'Latency', value: '45ms' }],
     gradient: 'linear-gradient(135deg, #06B6D4, #22D3EE)',
     color: '#06B6D4',
-    size: 'large',
   },
   {
     icon: <Smartphone size={28} />,
@@ -182,26 +176,22 @@ const bladeVariants: Variants = {
   },
 }
 
-const drawerVariants: Variants = {
-  closed: {
-    z: 0,
-    y: 0,
-    rotateX: 0,
-    scale: 1,
-    transition: { type: 'spring' as const, stiffness: 60, damping: 14 }
-  },
-  open: {
-    z: 200,
-    y: 120,
-    rotateX: -55,
-    scale: 1,
-    boxShadow: "0 50px 100px rgba(0,0,0,0.8)",
-    transition: { type: 'spring' as const, stiffness: 45, damping: 12 }
-  }
-}
-
 export default function Services() {
-  const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [selectedService, setSelectedService] = useState<Service | null>(null)
+
+  const handleNavClick = (href: string) => {
+    const id = href.replace('#', '')
+    const el = document.getElementById(id)
+    if (el) {
+      const rect = el.getBoundingClientRect()
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const targetY = rect.top + scrollTop - 88
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      })
+    }
+  }
 
   return (
     <section className="services section" id="services">
@@ -218,177 +208,136 @@ export default function Services() {
             Our <span className="gradient-text">Services</span>
           </h2>
           <p className="section-subtitle">
-            From concept to deployment — comprehensive digital solutions running
-            on our high-performance infrastructure.
+            From concept to deployment — comprehensive, high-performance digital solutions architected for modern enterprise scale.
           </p>
         </motion.div>
 
-        {/* Server Rack Chassis */}
-        <div className="server-rack">
-          <div className="rack-rail rack-rail--left"></div>
-          <div className="rack-rail rack-rail--right"></div>
-          
-          <motion.div
-            className="services__bento"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {services.map((service, i) => (
-              <ServerBlade
-                key={i}
-                index={i}
-                service={service}
-                isSelected={selectedId === i}
-                onMouseEnter={() => setSelectedId(i)}
-                onMouseLeave={() => setSelectedId(null)}
-                onClick={() => setSelectedId(selectedId === i ? null : i)}
-              />
-            ))}
-          </motion.div>
-        </div>
-      </div>
-
-    </section>
-  )
-}
-
-function ServerBlade({
-  service,
-  index,
-  isSelected,
-  onClick,
-  onMouseEnter,
-  onMouseLeave
-}: {
-  service: Service;
-  index: number;
-  isSelected: boolean;
-  onClick: () => void;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}) {
-  return (
-    <motion.div 
-      className={`services__card ${isSelected ? 'is-active' : ''}`}
-      custom={index}
-      variants={bladeVariants}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      style={{ cursor: 'pointer' }}
-    >
-      {/* The Slot Interior (Dark hole left behind in the rack) */}
-      <div className="slot-interior"></div>
-
-      {/* The 3D Sliding Drawer */}
-      <motion.div
-        className="drawer-chassis"
-        variants={drawerVariants}
-        initial="closed"
-        animate={isSelected ? "open" : "closed"}
-        style={{ '--theme-color': service.color, '--theme-gradient': service.gradient } as React.CSSProperties}
-      >
-        {/* TOP FACE (The Internal Motherboard) */}
-        <div className="drawer-motherboard">
-          <div className="motherboard-content">
-            <div className="drawer-header-action">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div className="services__card-icon" style={{ background: service.gradient, width: 32, height: 32, marginBottom: 0 }}>
-                  {React.cloneElement(service.icon as React.ReactElement<any>, { size: 18 })}
-                </div>
-                <h4>{service.title}</h4>
-              </div>
-              <button 
-                className="drawer-close-btn" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClick();
-                }}
-              >
-                Close Drawer
-              </button>
-            </div>
-            <div className="drawer-details">
-              <p className="detailed-info">{service.detailedInfo}</p>
-            </div>
-            <div className="drawer-sidebar">
-              <div className="hardware-stats">
-                {service.metrics.map((m, j) => (
-                  <div className="stat" key={j}>
-                    <span>{m.label}:</span> {m.value}
+        {/* Bento Grid */}
+        <motion.div
+          className="services__bento"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {services.map((service, i) => (
+            <motion.div
+              key={i}
+              className="services__card"
+              variants={bladeVariants}
+              onClick={() => setSelectedService(service)}
+              style={{ '--theme-color': service.color, '--theme-gradient': service.gradient } as React.CSSProperties}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+            >
+              <div className="services__card-inner">
+                <div className="services__card-top">
+                  <div className="services__card-icon" style={{ background: service.gradient }}>
+                    {React.cloneElement(service.icon as React.ReactElement<any>, { size: 22 })}
                   </div>
-                ))}
-              </div>
-              <div className="tech-stack-container">
-                <span className="stack-label">CORE STACK:</span>
-                <div className="stack-badges">
-                  {service.techStack.map((tech, j) => (
-                    <span className="tech-badge" key={j}>{tech}</span>
+                  <div className="services__card-metrics">
+                    {service.metrics.map((m, j) => (
+                      <span key={j} className="metric-pill">
+                        <span className="metric-label">{m.label}:</span> {m.value}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <h3 className="services__card-title">{service.title}</h3>
+                <p className="services__card-desc">{service.description}</p>
+
+                <div className="services__card-features">
+                  {service.features.map((f, j) => (
+                    <span className="services__feature-tag" key={j}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={service.color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                      {f}
+                    </span>
                   ))}
                 </div>
+
+                <div className="services__card-footer">
+                  <span className="services__learn-more">
+                    View Technical Architecture 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </span>
+                </div>
+              </div>
+              <div className="services__card-glow"></div>
+              <div className="services__card-border" style={{ background: service.gradient }}></div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Detailed Service Modal / Drawer */}
+      {selectedService && (
+        <div className="service-modal-overlay" onClick={() => setSelectedService(null)}>
+          <motion.div
+            className="service-modal-content glass-card"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            onClick={(e) => e.stopPropagation()}
+            style={{ '--theme-color': selectedService.color, '--theme-gradient': selectedService.gradient } as React.CSSProperties}
+          >
+            <button className="service-modal-close" onClick={() => setSelectedService(null)} aria-label="Close modal">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <div className="service-modal-header">
+              <div className="services__card-icon" style={{ background: selectedService.gradient, width: 48, height: 48 }}>
+                {React.cloneElement(selectedService.icon as React.ReactElement<any>, { size: 26 })}
+              </div>
+              <div>
+                <span className="section-label" style={{ color: selectedService.color }}>Architecture Blueprint</span>
+                <h3>{selectedService.title}</h3>
               </div>
             </div>
-          </div>
-          {/* Circuit traces for the motherboard floor */}
-          <svg className="motherboard-traces" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 0 20 L 50 20 L 100 80 L 400 80" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2"/>
-            <path d="M 50 150 L 100 100 L 500 100" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2"/>
-          </svg>
+
+            <div className="service-modal-body">
+              <div className="modal-section">
+                <h4>System Overview & Deep-Dive</h4>
+                <p className="detailed-info">{selectedService.detailedInfo}</p>
+              </div>
+
+              <div className="modal-grid">
+                <div className="modal-section">
+                  <h4>Core Technology Stack</h4>
+                  <div className="stack-badges">
+                    {selectedService.techStack.map((tech, j) => (
+                      <span className="tech-badge" key={j}>{tech}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="modal-section">
+                  <h4>Performance Benchmarks</h4>
+                  <div className="modal-metrics">
+                    {selectedService.metrics.map((m, j) => (
+                      <div className="modal-metric-card" key={j}>
+                        <span className="modal-metric-val" style={{ color: selectedService.color }}>{m.value}</span>
+                        <span className="modal-metric-lbl">{m.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="service-modal-footer">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setSelectedService(null)
+                  handleNavClick('#contact')
+                }}
+              >
+                Discuss This Architecture
+              </button>
+            </div>
+          </motion.div>
         </div>
-
-        {/* FRONT FACE (The Normal Blade Faceplate) */}
-        <div className="drawer-faceplate">
-          <div className="server-blade__panel">
-            <div className="server-blade__label">SYS_0{index + 1}</div>
-            
-            <div className="services__card-icon" style={{ background: service.gradient, marginRight: '16px' }}>
-              {React.cloneElement(service.icon as React.ReactElement<any>, { size: 18 })}
-            </div>
-
-            <div 
-              className="server-blade__handle" 
-              title={isSelected ? "Push drawer in" : "Pull drawer out"}
-            >
-              <div className="handle-grip"></div>
-            </div>
-            <div className="server-blade__leds">
-              <div className="led led--pwr"></div>
-              <div className="led led--net"></div>
-              <div className="led led--disk"></div>
-            </div>
-            <div className="server-blade__ports">
-              <div className="port"></div>
-              <div className="port"></div>
-            </div>
-            <div className="server-blade__grill">
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-
-          <div className="server-blade__content">
-            <div className="data-stream data-stream-1"></div>
-            <div className="data-stream data-stream-2"></div>
-            
-            <h3 className="services__card-title">{service.title}</h3>
-            <p className="services__card-desc">{service.description}</p>
-
-            <div className="services__card-features">
-              {service.features.map((f, j) => (
-                <span className="services__feature-tag" key={j}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--theme-color)" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
-                  {f}
-                </span>
-              ))}
-            </div>
-          </div>
-          
-          <div className="services__card-glow" style={{ background: service.gradient }}></div>
-          <div className="services__card-border" style={{ background: service.gradient }}></div>
-        </div>
-
-      </motion.div>
-    </motion.div>
+      )}
+    </section>
   )
 }

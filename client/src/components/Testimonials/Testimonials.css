@@ -51,6 +51,10 @@
   padding: var(--space-2xl);
   text-align: center;
   transform-style: preserve-3d;
+  background: linear-gradient(135deg, var(--clr-primary-dark), var(--clr-secondary));
+  border: none;
+  box-shadow: 0 15px 35px var(--clr-primary-glow);
+  border-radius: var(--radius-2xl);
 }
 
 .testimonials__stars {
@@ -63,7 +67,7 @@
 .testimonials__quote {
   font-size: var(--fs-lg);
   font-weight: 400;
-  color: var(--clr-text);
+  color: #ffffff;
   line-height: 1.8;
   margin-bottom: var(--space-xl);
   font-style: italic;
@@ -87,6 +91,7 @@
   font-weight: 700;
   color: white;
   flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .testimonials__author-info {
@@ -99,12 +104,12 @@
   font-family: var(--font-heading);
   font-size: var(--fs-base);
   font-weight: 600;
-  color: var(--clr-text);
+  color: #ffffff;
 }
 
 .testimonials__role {
   font-size: var(--fs-xs);
-  color: var(--clr-text-muted);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Navigation */

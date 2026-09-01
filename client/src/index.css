@@ -19,11 +19,11 @@
   --clr-accent-orange: #F59E0B;
   --clr-accent-rose: #F43F5E;
   --clr-accent-violet: #7C3AED;
-  --clr-bg: #FFFFFF;
-  --clr-bg-alt: #F8FAFC;
+  --clr-bg: #F8FAFC;
+  --clr-bg-alt: #F1F5F9;
   --clr-surface: #FFFFFF;
-  --clr-surface-light: #F1F5F9;
-  --clr-surface-hover: #E2E8F0;
+  --clr-surface-light: #E2E8F0;
+  --clr-surface-hover: #CBD5E1;
   --clr-border: #E2E8F0;
   --clr-border-light: #CBD5E1;
   --clr-text: #0F172A;
@@ -90,7 +90,7 @@
 }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: var(--nav-height);
+  scroll-padding-top: calc(var(--nav-height) + 4rem);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

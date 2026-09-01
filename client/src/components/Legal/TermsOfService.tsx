@@ -77,7 +77,7 @@ export default function TermsOfService({ onClose }: Props) {
           <h2>9. Contact Us</h2>
           <p>In order to resolve a complaint regarding the Site or to receive further information regarding use of the Site, please contact us at:</p>
           <ul>
-            <li><strong>Email:</strong> wintegtechnologies@gmail.com</li>
+            <li><strong>Email:</strong> contact@wintegtechnologies.com</li>
             <li><strong>Phone:</strong> +91-8100474669 / +91-8420573673</li>
             <li><strong>Web:</strong> <a href="https://wintegtechnologies.com/#contact" onClick={(e) => { e.preventDefault(); onClose(); const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>wintegtechnologies.com/contact</a></li>
           </ul>

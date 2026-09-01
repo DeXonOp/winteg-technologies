@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Benefits', href: '#whychooseus' },
   { label: 'Testimonials', href: '#testimonials' },
   { label: 'Technologies', href: '#tech-stack' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Quotation', href: '#quotation' },
 ]
 
 export default function Navbar() {
@@ -115,11 +115,11 @@ export default function Navbar() {
 
         {/* CTA */}
         <a
-          href="#hero-contact"
+          href="#contact"
           className="btn btn-primary navbar__cta"
-          onClick={(e) => { e.preventDefault(); handleNavClick('#hero-contact') }}
+          onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }}
         >
-          Get a Quote
+          Contact Us
         </a>
 
         {/* Mobile Toggle */}
@@ -150,11 +150,11 @@ export default function Navbar() {
           ))}
           <li style={{ transitionDelay: `${navLinks.length * 50}ms` }}>
             <a
-              href="#hero-contact"
+              href="#contact"
               className="btn btn-primary"
-              onClick={(e) => { e.preventDefault(); handleNavClick('#hero-contact') }}
+              onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }}
             >
-              Get a Quote
+              Contact Us
             </a>
           </li>
         </ul>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, memo } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 interface CountUpProps {
@@ -9,7 +9,7 @@ interface CountUpProps {
   className?: string
 }
 
-export default function CountUp({ target, suffix = '', prefix = '', duration = 2, className = '' }: CountUpProps) {
+const CountUp = memo(function CountUp({ target, suffix = '', prefix = '', duration = 2, className = '' }: CountUpProps) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-50px' })
@@ -49,4 +49,6 @@ export default function CountUp({ target, suffix = '', prefix = '', duration = 2
       {prefix}{count}{suffix}
     </motion.span>
   )
-}
+})
+
+export default CountUp

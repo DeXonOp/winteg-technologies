@@ -1,25 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
-import Services from './components/Services/Services'
-import CostEstimator from './components/CostEstimator/CostEstimator'
 import About from './components/About/About'
-import Portfolio from './components/Portfolio/Portfolio'
-import WhyChooseUs from './components/WhyChooseUs/WhyChooseUs'
-import Testimonials from './components/Testimonials/Testimonials'
-import TechStack from './components/TechStack/TechStack'
-import Contact from './components/Contact/Contact'
 import Footer from './components/Footer/Footer'
-import Chatbot from './components/Chatbot/Chatbot'
-import AdminChat from './components/AdminChat/AdminChat'
-import PrivacyPolicy from './components/Legal/PrivacyPolicy'
-import TermsOfService from './components/Legal/TermsOfService'
-import ScrollProgress from './components/ScrollProgress/ScrollProgress'
 import ParticleBackground from './components/ParticleBackground/ParticleBackground'
 import CursorGlow from './components/CursorGlow/CursorGlow'
 import LiveVisitors from './components/LiveVisitors/LiveVisitors'
 import ActionDock from './components/ActionDock/ActionDock'
 import './App.css'
+
+// Lazy loaded below-the-fold components for elite initial load performance
+const Services = lazy(() => import('./components/Services/Services'))
+const CostEstimator = lazy(() => import('./components/CostEstimator/CostEstimator'))
+const Portfolio = lazy(() => import('./components/Portfolio/Portfolio'))
+const WhyChooseUs = lazy(() => import('./components/WhyChooseUs/WhyChooseUs'))
+const Testimonials = lazy(() => import('./components/Testimonials/Testimonials'))
+const TechStack = lazy(() => import('./components/TechStack/TechStack'))
+const Contact = lazy(() => import('./components/Contact/Contact'))
+const ContactUs = lazy(() => import('./components/ContactUs/ContactUs'))
+const Chatbot = lazy(() => import('./components/Chatbot/Chatbot'))
+const AdminChat = lazy(() => import('./components/AdminChat/AdminChat'))
+const PrivacyPolicy = lazy(() => import('./components/Legal/PrivacyPolicy'))
+const TermsOfService = lazy(() => import('./components/Legal/TermsOfService'))
+const ScrollProgress = lazy(() => import('./components/ScrollProgress/ScrollProgress'))
 
 function App() {
   const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | null>(null);
@@ -85,31 +88,39 @@ function App() {
         <Hero />
         <div className="section-divider"></div>
         <About />
-        <div className="section-divider"></div>
-        <Services />
-        <div className="section-divider"></div>
-        <CostEstimator />
-        <div className="section-divider"></div>
-        <Portfolio />
-        <div className="section-divider"></div>
-        <WhyChooseUs />
-        <div className="section-divider"></div>
-        <Testimonials />
-        <div className="section-divider"></div>
-        <TechStack />
-        <div className="section-divider"></div>
-        <Contact />
+        
+        <Suspense fallback={<div style={{ height: '50vh' }}></div>}>
+          <div className="section-divider"></div>
+          <Services />
+          <div className="section-divider"></div>
+          <CostEstimator />
+          <div className="section-divider"></div>
+          <Portfolio />
+          <div className="section-divider"></div>
+          <WhyChooseUs />
+          <div className="section-divider"></div>
+          <Testimonials />
+          <div className="section-divider"></div>
+          <TechStack />
+          <div className="section-divider"></div>
+          <Contact />
+          <div className="section-divider"></div>
+          <ContactUs />
+        </Suspense>
       </main>
+      
       <Footer onOpenLegal={setLegalModal} />
 
-      {/* AI Chatbot — controlled by ActionDock */}
-      <Chatbot isOpen={chatOpen} onToggle={setChatOpen} />
+      <Suspense fallback={null}>
+        {/* AI Chatbot — controlled by ActionDock */}
+        <Chatbot isOpen={chatOpen} onToggle={setChatOpen} />
+
+        {legalModal === 'privacy' && <PrivacyPolicy onClose={() => setLegalModal(null)} />}
+        {legalModal === 'terms' && <TermsOfService onClose={() => setLegalModal(null)} />}
+      </Suspense>
 
       {/* macOS-style floating action dock */}
       <ActionDock onOpenChat={() => setChatOpen((prev) => !prev)} />
-
-      {legalModal === 'privacy' && <PrivacyPolicy onClose={() => setLegalModal(null)} />}
-      {legalModal === 'terms' && <TermsOfService onClose={() => setLegalModal(null)} />}
     </div>
   )
 }
