@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import CustomSelect from '../CustomSelect/CustomSelect'
+import NotificationBanner from '../NotificationBanner/NotificationBanner'
 import './Contact.css'
 
 import { motion } from 'framer-motion'
@@ -9,15 +10,16 @@ export default function Contact() {
     name: '',
     email: '',
     company: '',
-    countryCode: '+91',
-    phone: '',
     website: '',
-    project_type: '',
+    project_type: 'New Project build from scratch',
     technologies: [] as string[],
     service: '',
     timeline: '',
     budget: '',
+    countryCode: '+91',
+    phone: '',
     referral: '',
+    contactMethod: 'Email',
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
@@ -70,7 +72,7 @@ export default function Contact() {
       }
 
       setSubmitted(true)
-      setFormData({ name: '', email: '', company: '', countryCode: '+91', phone: '', website: '', project_type: '', technologies: [], service: '', timeline: '', budget: '', referral: '', message: '' })
+      setFormData({ name: '', email: '', company: '', countryCode: '+91', phone: '', website: '', project_type: 'New Project build from scratch', technologies: [], service: '', timeline: '', budget: '', referral: '', contactMethod: 'Email', message: '' })
       setTimeout(() => setSubmitted(false), 5000)
     } catch (err: any) {
       console.error('Error submitting contact form:', err)
@@ -82,6 +84,13 @@ export default function Contact() {
 
   return (
     <section className="contact section" id="quotation">
+      <NotificationBanner
+        isVisible={submitted}
+        title="Quotation Request Sent!"
+        message="Thank you! Your quotation request has been submitted successfully. Our team will review it and reply shortly."
+        onClose={() => setSubmitted(false)}
+      />
+
       {/* Background glow */}
       <div className="contact__glow"></div>
 
@@ -103,7 +112,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          style={{ maxWidth: '1000px', margin: '0 auto' }}
+          style={{ width: '100%', maxWidth: '880px', margin: '0 auto' }}
         >
           <form className="contact__form glass-card" onSubmit={handleSubmit}>
               {submitted && (
@@ -159,52 +168,47 @@ export default function Contact() {
                 <div className="contact__field">
                   <label htmlFor="website">Website URL (Optional)</label>
                   <input
-                    type="url"
+                    type="text"
                     id="website"
-                    placeholder="https://example.com"
+                    placeholder="abc.com"
                     value={formData.website}
                     onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                   />
                 </div>
               </div>
 
-              <div className="contact__field contact__field--full">
-                <label>Project Type</label>
-                <div className="contact__radio-group">
-                  {['New Project build from scratch', 'Redesign/Upgrade existing system', 'Ongoing Support & Maintenance'].map((type) => (
-                    <label key={type} className="contact__radio">
-                      <input 
-                        type="radio" 
-                        name="project_type"
-                        value={type}
-                        checked={formData.project_type === type}
-                        onChange={(e) => setFormData({ ...formData, project_type: e.target.value })}
-                      />
-                      <span>{type}</span>
-                    </label>
-                  ))}
+              <div className="contact__form-row">
+                <div className="contact__field">
+                  <label htmlFor="project_type">Project Type</label>
+                  <CustomSelect
+                    id="project_type"
+                    value={formData.project_type}
+                    onChange={(val) => setFormData({ ...formData, project_type: val })}
+                    placeholder="Select project type"
+                    options={[
+                      { value: 'New Project build from scratch', label: 'New Project build from scratch' },
+                      { value: 'Redesign/Upgrade existing system', label: 'Redesign/Upgrade existing system' },
+                      { value: 'Ongoing Support & Maintenance', label: 'Ongoing Support & Maintenance' },
+                      { value: 'Technical Consulting & Architecture', label: 'Technical Consulting & Architecture' },
+                    ]}
+                  />
                 </div>
-              </div>
-
-              <div className="contact__field contact__field--full">
-                <label>Technologies of Interest</label>
-                <div className="contact__checkbox-group">
-                  {['AI / Machine Learning', 'Web Development', 'Mobile Apps (iOS/Android)', 'IoT & Telemetrics', 'Cloud Infrastructure', 'Custom Software'].map((tech) => (
-                    <label key={tech} className="contact__checkbox">
-                      <input 
-                        type="checkbox" 
-                        value={tech}
-                        checked={formData.technologies.includes(tech)}
-                        onChange={(e) => {
-                          const newTechs = e.target.checked 
-                            ? [...formData.technologies, tech] 
-                            : formData.technologies.filter(t => t !== tech);
-                          setFormData({ ...formData, technologies: newTechs });
-                        }}
-                      />
-                      <span>{tech}</span>
-                    </label>
-                  ))}
+                <div className="contact__field">
+                  <label htmlFor="technologies">Technologies of Interest</label>
+                  <CustomSelect
+                    id="technologies"
+                    value={Array.isArray(formData.technologies) ? formData.technologies.join(', ') : formData.technologies}
+                    onChange={(val) => setFormData({ ...formData, technologies: val ? [val] : [] })}
+                    placeholder="Select technology"
+                    options={[
+                      { value: 'AI / Machine Learning', label: 'AI / Machine Learning' },
+                      { value: 'Web Development', label: 'Web Development' },
+                      { value: 'Mobile Apps (iOS/Android)', label: 'Mobile Apps (iOS/Android)' },
+                      { value: 'IoT & Telemetrics', label: 'IoT & Telemetrics' },
+                      { value: 'Cloud Infrastructure', label: 'Cloud Infrastructure' },
+                      { value: 'Custom Software', label: 'Custom Enterprise Software' },
+                    ]}
+                  />
                 </div>
               </div>
 
@@ -260,58 +264,74 @@ export default function Contact() {
                     onChange={(val) => setFormData({ ...formData, budget: val })}
                     placeholder="Select budget range"
                     options={[
-                      { value: '20k-50k', label: '₹20,000 — ₹50,000' },
-                      { value: '50k-1.5L', label: '₹50,000 — ₹1,50,000 (1.5 Lakhs)' },
-                      { value: '1.5L-3L', label: '₹1,50,000 — ₹3,00,000 (3 Lakhs)' },
-                      { value: '3L-7L', label: '₹3,00,000 — ₹7,00,000 (7 Lakhs)' },
-                      { value: '7L-10L', label: '₹7,00,000 — ₹10,00,000 (10 Lakhs)' },
-                      { value: '10L+', label: '₹10,00,000+ (Above 10 Lakhs)' },
+                      { value: '500-1.5k', label: '$500 — $1,500 USD' },
+                      { value: '1.5k-3k', label: '$1,500 — $3,000 USD' },
+                      { value: '3k-7k', label: '$3,000 — $7,000 USD' },
+                      { value: '7k-15k', label: '$7,000 — $15,000 USD' },
+                      { value: '15k+', label: '$15,000+ USD' },
                     ]}
                   />
                 </div>
                 <div className="contact__field">
+                  <label htmlFor="referral">How did you hear about us?</label>
+                  <CustomSelect
+                    id="referral"
+                    value={formData.referral}
+                    onChange={(val) => setFormData({ ...formData, referral: val })}
+                    placeholder="Select option"
+                    options={[
+                      { value: 'Google Search', label: 'Google Search' },
+                      { value: 'LinkedIn', label: 'LinkedIn' },
+                      { value: 'Referral', label: 'Friend or Colleague' },
+                      { value: 'Social Media', label: 'Social Media' },
+                      { value: 'Other', label: 'Other' },
+                    ]}
+                  />
+                </div>
+              </div>
+
+              <div className="contact__form-row">
+                <div className="contact__field">
                   <label htmlFor="phone">Phone (Optional)</label>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <select
-                      value={formData.countryCode}
-                      onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-                      style={{ width: '90px', padding: '0.75rem 0.5rem', backgroundImage: 'none' }}
-                      aria-label="Country Code"
-                    >
-                      <option value="+91">+91</option>
-                      <option value="+1">+1</option>
-                      <option value="+44">+44</option>
-                      <option value="+61">+61</option>
-                      <option value="+81">+81</option>
-                      <option value="+971">+971</option>
-                    </select>
+                  <div className="contact__phone-wrap">
+                    <div className="contact__country-select">
+                      <CustomSelect
+                        id="countryCode"
+                        value={formData.countryCode}
+                        onChange={(val) => setFormData({ ...formData, countryCode: val })}
+                        placeholder="+91"
+                        options={[
+                          { value: '+91', label: '🇮🇳 +91' },
+                          { value: '+1', label: '🇺🇸 +1' },
+                          { value: '+44', label: '🇬🇧 +44' },
+                          { value: '+61', label: '🇦🇺 +61' },
+                          { value: '+81', label: '🇯🇵 +81' },
+                          { value: '+971', label: '🇦🇪 +971' },
+                        ]}
+                      />
+                    </div>
                     <input
                       type="tel"
                       id="phone"
                       placeholder="phone number"
-                      style={{ flex: 1 }}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
                   </div>
                 </div>
-              </div>
-
-              <div className="contact__field contact__field--full">
-                <label htmlFor="referral">How did you hear about us?</label>
-                <CustomSelect
-                  id="referral"
-                  value={formData.referral}
-                  onChange={(val) => setFormData({ ...formData, referral: val })}
-                  placeholder="Select option"
-                  options={[
-                    { value: 'Google Search', label: 'Google Search' },
-                    { value: 'LinkedIn', label: 'LinkedIn' },
-                    { value: 'Referral', label: 'Friend or Colleague' },
-                    { value: 'Social Media', label: 'Social Media' },
-                    { value: 'Other', label: 'Other' },
-                  ]}
-                />
+                <div className="contact__field">
+                  <label htmlFor="contactMethod">Preferred Contact Method</label>
+                  <CustomSelect
+                    id="contactMethod"
+                    value={formData.contactMethod}
+                    onChange={(val) => setFormData({ ...formData, contactMethod: val })}
+                    placeholder="Select method"
+                    options={[
+                      { value: 'Email', label: 'Email (Default)' },
+                      { value: 'WhatsApp', label: 'WhatsApp' },
+                    ]}
+                  />
+                </div>
               </div>
 
               <div className="contact__field">

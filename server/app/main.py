@@ -27,9 +27,19 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 class CacheControlMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         response = await call_next(request)
+        path = request.url.path
         if request.method == "GET":
-            # Cache API GET requests for 60 seconds (adjust as needed for specific endpoints)
-            response.headers["Cache-Control"] = "public, max-age=60"
+            # Static assets & videos — cache aggressively (1 year)
+            if any(path.endswith(ext) for ext in ('.mp4', '.webm', '.jpg', '.png', '.svg', '.woff2', '.css', '.js')):
+                response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+            # API GET endpoints — cache for 5 minutes
+            elif path.startswith("/api/"):
+                response.headers["Cache-Control"] = "public, max-age=300"
+            else:
+                response.headers["Cache-Control"] = "public, max-age=60"
+        # Keep-alive to reduce TCP reconnection overhead
+        response.headers["Connection"] = "keep-alive"
+        response.headers["Keep-Alive"] = "timeout=30, max=100"
         return response
 
 

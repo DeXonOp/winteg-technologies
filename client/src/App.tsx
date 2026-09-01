@@ -91,21 +91,37 @@ function App() {
         
         <Suspense fallback={<div style={{ height: '50vh' }}></div>}>
           <div className="section-divider"></div>
-          <Services />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' } as React.CSSProperties}>
+            <Services />
+          </div>
           <div className="section-divider"></div>
-          <CostEstimator />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' } as React.CSSProperties}>
+            <CostEstimator />
+          </div>
           <div className="section-divider"></div>
-          <Portfolio />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' } as React.CSSProperties}>
+            <Portfolio />
+          </div>
           <div className="section-divider"></div>
-          <WhyChooseUs />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' } as React.CSSProperties}>
+            <WhyChooseUs />
+          </div>
           <div className="section-divider"></div>
-          <Testimonials />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 400px' } as React.CSSProperties}>
+            <Testimonials />
+          </div>
           <div className="section-divider"></div>
-          <TechStack />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' } as React.CSSProperties}>
+            <TechStack />
+          </div>
           <div className="section-divider"></div>
-          <Contact />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 800px' } as React.CSSProperties}>
+            <Contact />
+          </div>
           <div className="section-divider"></div>
-          <ContactUs />
+          <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' } as React.CSSProperties}>
+            <ContactUs />
+          </div>
         </Suspense>
       </main>
       

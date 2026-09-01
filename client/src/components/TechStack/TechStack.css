@@ -26,27 +26,27 @@
 }
 
 .techstack__category:nth-child(1) {
-  background-color: #F4F0FF;
-  border-color: #D8B4FE;
-  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.06);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(124, 58, 237, 0.02));
+  border: 1px solid rgba(124, 58, 237, 0.15);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.05);
 }
 
 .techstack__category:nth-child(2) {
-  background-color: #EFF6FF;
-  border-color: #BFDBFE;
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.06);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.05);
 }
 
 .techstack__category:nth-child(3) {
-  background-color: #FFF1F2;
-  border-color: #FECDD3;
-  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.06);
+  background: linear-gradient(135deg, rgba(225, 29, 72, 0.08), rgba(225, 29, 72, 0.02));
+  border: 1px solid rgba(225, 29, 72, 0.15);
+  box-shadow: 0 10px 30px rgba(225, 29, 72, 0.05);
 }
 
 .techstack__category:nth-child(4) {
-  background-color: #ECFDF5;
-  border-color: #A7F3D0;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.06);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.02));
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.05);
 }
 
 .techstack__category::before {
@@ -55,9 +55,9 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(90deg, var(--clr-primary), var(--clr-secondary), transparent);
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 .techstack__category-title {
@@ -80,10 +80,12 @@
   gap: 8px;
   padding: 8px 16px;
   font-size: var(--fs-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--clr-text-secondary);
-  background: rgba(168, 85, 247, 0.04);
-  border: 1px solid rgba(168, 85, 247, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-full);
   cursor: default;
   transition: all 0.3s var(--ease-out);
@@ -91,8 +93,9 @@
 
 .techstack__pill:hover {
   color: var(--clr-text);
-  border-color: var(--tech-color, var(--clr-primary));
-  background: rgba(168, 85, 247, 0.08);
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .techstack__pill-dot {
@@ -101,6 +104,18 @@
   border-radius: 50%;
   flex-shrink: 0;
   box-shadow: 0 0 6px currentColor;
+}
+
+.techstack__pill-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.techstack__pill:hover .techstack__pill-icon {
+  transform: scale(1.15) rotate(4deg);
 }
 
 /* Floating particles */

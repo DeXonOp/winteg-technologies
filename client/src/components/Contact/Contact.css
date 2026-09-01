@@ -191,6 +191,46 @@ a.contact__detail-value:hover {
   transition: all var(--transition-fast);
 }
 
+/* Inputs, selects, textareas fill 100% of their grid column */
+.contact__field input,
+.contact__field select,
+.contact__field textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: var(--fs-sm);
+  color: var(--clr-text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.contact__phone-wrap {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.contact__country-select {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.contact__country-select .custom-select-trigger {
+  padding: 0.75rem 0.5rem;
+  font-weight: 500;
+}
+
+.contact__country-select .custom-select-dropdown {
+  min-width: 120px;
+}
+
+#phone {
+  flex: 1;
+  min-width: 0;
+}
+
 .contact__field input::placeholder,
 .contact__field textarea::placeholder {
   color: var(--clr-text-muted);
@@ -275,10 +315,11 @@ a.contact__detail-value:hover {
 }
 
 .contact__submit {
-  width: 100%;
-  padding: 0.875rem;
+  width: auto;
+  min-width: 220px;
+  padding: 0.875rem 2.5rem;
   font-size: var(--fs-base);
-  margin-top: var(--space-sm);
+  margin-top: var(--space-md);
 }
 
 .contact__submit:hover {

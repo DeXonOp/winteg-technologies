@@ -18,7 +18,17 @@ export default defineConfig({
     },
   },
   build: {
-    target: 'esnext', // Use modern JS for faster execution
+    target: 'esnext',
+    cssCodeSplit: true,
+    sourcemap: false,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        passes: 2,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks(id: string) {

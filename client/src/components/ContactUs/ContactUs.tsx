@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
+import NotificationBanner from '../NotificationBanner/NotificationBanner'
 import './ContactUs.css'
 
 export default function ContactUs() {
@@ -70,6 +71,12 @@ export default function ContactUs() {
 
   return (
     <section className="contact-us section" id="contact">
+      <NotificationBanner
+        isVisible={status === 'success'}
+        title="Message Sent Successfully!"
+        message="Thank you for contacting Winteg Technologies! Our team has received your message and will respond shortly."
+        onClose={() => setStatus('idle')}
+      />
       <div className="container">
         <div className="contact__grid">
           {/* Left — Info */}

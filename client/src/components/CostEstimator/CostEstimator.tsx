@@ -11,9 +11,9 @@ export default function CostEstimator() {
   const [estimate, setEstimate] = useState({ min: 0, max: 0 })
 
   useEffect(() => {
-    let base = 3000;
-    if (type === 'mobile') base = 5000;
-    if (type === 'both') base = 8000;
+    let base = 1500; // Realistic base for a simple Web App in USD
+    if (type === 'mobile') base = 3500;
+    if (type === 'both') base = 4500;
 
     const complexityMult = [1, 1.4, 2.2, 3.5][complexity - 1];
     const designMult = [1, 1.3, 1.8][design - 1];
@@ -22,8 +22,8 @@ export default function CostEstimator() {
     const total = base * complexityMult * designMult * pagesMult;
 
     setEstimate({
-      min: Math.floor(total * 0.85 / 100) * 100,
-      max: Math.ceil(total * 1.15 / 100) * 100
+      min: Math.floor(total * 0.85 / 1000) * 1000,
+      max: Math.ceil(total * 1.15 / 1000) * 1000
     })
   }, [type, complexity, design, pages])
 
@@ -147,7 +147,7 @@ export default function CostEstimator() {
             <p className="estimator__disclaimer">
               *This is a rough automated estimate. Factors like integrations, animations, and backend complexity will affect the final price.
             </p>
-            <a href="#contact" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+            <a href="#quotation" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
               Get a Detailed Proposal
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
             </a>

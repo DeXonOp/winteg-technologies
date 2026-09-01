@@ -27,33 +27,33 @@
 }
 
 .why__card:nth-child(1) {
-  background-color: #F4F0FF;
-  border-color: #D8B4FE;
+  background-color: #7C3AED;
+  border-color: #6D28D9;
 }
 
 .why__card:nth-child(2) {
-  background-color: #ECFDF5;
-  border-color: #A7F3D0;
+  background-color: #10B981;
+  border-color: #059669;
 }
 
 .why__card:nth-child(3) {
-  background-color: #FFFBEB;
-  border-color: #FDE68A;
+  background-color: #F59E0B;
+  border-color: #D97706;
 }
 
 .why__card:nth-child(4) {
-  background-color: #ECFEFF;
-  border-color: #A5F3FC;
+  background-color: #06B6D4;
+  border-color: #0891B2;
 }
 
 .why__card:nth-child(5) {
-  background-color: #FDF2F8;
-  border-color: #FBCFE8;
+  background-color: #EC4899;
+  border-color: #DB2777;
 }
 
 .why__card:nth-child(6) {
-  background-color: #EEF2FF;
-  border-color: #C7D2FE;
+  background-color: #6366F1;
+  border-color: #4F46E5;
 }
 
 .why__card-bg-number {
@@ -63,7 +63,7 @@
   font-family: var(--font-heading);
   font-size: 5rem;
   font-weight: 900;
-  color: rgba(168, 85, 247, 0.04);
+  color: rgba(255, 255, 255, 0.15);
   line-height: 1;
   pointer-events: none;
   user-select: none;
@@ -90,11 +90,12 @@
   font-weight: 700;
   margin-bottom: var(--space-sm);
   letter-spacing: -0.01em;
+  color: #FFFFFF;
 }
 
 .why__card-desc {
   font-size: var(--fs-sm);
-  color: var(--clr-text-secondary);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
 }
 

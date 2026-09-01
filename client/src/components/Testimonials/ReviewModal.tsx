@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import './ReviewModal.css'
 
@@ -67,7 +68,9 @@ export default function ReviewModal({ isOpen, onClose, onSuccess }: ReviewModalP
     }
   }
 
-  return (
+  if (!document.body) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -136,7 +139,7 @@ export default function ReviewModal({ isOpen, onClose, onSuccess }: ReviewModalP
                   <div className="rating-select">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
-                        type="button"
+                         type="button"
                         key={star}
                         className={`star-btn ${formData.rating >= star ? 'active' : ''}`}
                         onClick={() => setFormData({ ...formData, rating: star })}
@@ -170,6 +173,7 @@ export default function ReviewModal({ isOpen, onClose, onSuccess }: ReviewModalP
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }

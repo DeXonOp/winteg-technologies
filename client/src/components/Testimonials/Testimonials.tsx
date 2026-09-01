@@ -230,7 +230,7 @@ export default function Testimonials() {
           
           {/* Leave a Review Button */}
           <div className="testimonials__action">
-            <button className="btn btn-outline" onClick={() => setIsReviewModalOpen(true)}>
+            <button className="btn testimonials__review-btn" onClick={() => setIsReviewModalOpen(true)}>
               Leave a Review
             </button>
           </div>

@@ -1,0 +1,102 @@
+.notification-banner {
+  position: fixed;
+  top: 28px;
+  right: 28px;
+  z-index: 10000;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 420px;
+  width: calc(100vw - 56px);
+  padding: 16px 18px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5),
+              0 0 30px rgba(16, 185, 129, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  color: #F8FAFC;
+}
+
+.notification-banner__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.15), transparent 70%);
+  pointer-events: none;
+}
+
+.notification-banner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.notification-banner__content {
+  flex: 1;
+}
+
+.notification-banner__title {
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+
+.notification-banner__message {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94A3B8;
+  line-height: 1.45;
+}
+
+.notification-banner__close {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.notification-banner__close:hover {
+  color: #F1F5F9;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.notification-banner__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #34D399);
+  transform-origin: left;
+}
+
+@media (max-width: 480px) {
+  .notification-banner {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    max-width: none;
+  }
+}

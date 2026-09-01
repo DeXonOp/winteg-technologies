@@ -1,0 +1,11 @@
+[tool.pyrefly]
+exclude = [
+    "**/_pyrefly_virtual_/**",
+    "C:/_pyrefly_virtual_/**"
+]
+
+[tool.pyright]
+exclude = [
+    "**/_pyrefly_virtual_/**",
+    "C:/_pyrefly_virtual_/**"
+]

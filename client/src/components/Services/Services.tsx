@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import {
   Code2, Monitor, Cpu, Brain, Smartphone, Share2,
@@ -178,6 +178,20 @@ const bladeVariants: Variants = {
 
 export default function Services() {
   const [selectedService, setSelectedService] = useState<Service | null>(null)
+
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (selectedService) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedService])
 
   const handleNavClick = (href: string) => {
     const id = href.replace('#', '')
